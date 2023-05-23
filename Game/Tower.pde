@@ -3,6 +3,12 @@ public class Tower {
   public float cooldownTime;
   public float range;
   
+    public Tower(float dmg, float cd, float rng) {
+    damage = dmg;
+    cooldownTime = cd;
+    range = rng;
+  }
+  
   public float returncdt() {
     return cooldownTime;
   }
@@ -18,6 +24,7 @@ public class Tower {
     if (attacked != null) {
       
       circle(x, y, 
+      hightlight();
     }
     
   }
@@ -26,6 +33,7 @@ public class Tower {
     /* change the color of the enemy, so just load in a new image in the current place of the enemy
     call losehealth
     */
+    
   }
   
   
