@@ -1,21 +1,22 @@
 # Work Log
 
-## GROUP MEMBER 1
+## Qiuyi Chen
 
-### date x
+### 5/23/23
 
-info
+Worked on tower and enemies, made constructors and their actions. For towers
+made methods.
 
 ### date y
 
 info
 
 
-## GROUP MEMBER 2
+## Ashton Dong
 
-### date x
+### 5/23/23
 
-info
+Added in more information to map, as well as more codes. 
 
 ### date y
 
