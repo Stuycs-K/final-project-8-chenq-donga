@@ -1,4 +1,7 @@
-public class Game {
-  private int[][] map;
-  private 
+void setup() {
+  
+}
+
+void draw() {
+  
 }
