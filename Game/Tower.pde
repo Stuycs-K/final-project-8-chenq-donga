@@ -2,11 +2,13 @@ public class Tower {
   public float damage;
   public float cooldownTime;
   public float range;
+  public int numberofatks;
   
-    public Tower(float dmg, float cd, float rng) {
+    public Tower(float dmg, float cd, float rng, int numoatks) {
     damage = dmg;
     cooldownTime = cd;
     range = rng;
+    numberofatks = numoatks;
   }
   
   public float returncdt() {
