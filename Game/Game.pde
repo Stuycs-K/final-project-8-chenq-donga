@@ -1,4 +1,4 @@
-void setup() {
-  size(1500,900);
-
+public class Game {
+  private int[][] map;
+  private 
 }
