@@ -4,7 +4,7 @@ public class Tower {
   public float range;
   public int numberofatks;
   
-    public Tower(float dmg, float cd, float rng, int numoatks) {
+  public Tower(float dmg, float cd, float rng, int numoatks) {
     damage = dmg;
     cooldownTime = cd;
     range = rng;
@@ -24,9 +24,8 @@ public class Tower {
   public void attacking() {
     Enemy attacked = enemyinrange();
     if (attacked != null) {
-      
-      circle(x, y, 
-      hightlight();
+      attacked.losehealth(damage);
+      //hightlight();
     }
     
   }
