@@ -34,17 +34,20 @@ public class Tower {
   //  return null;
   //}
   
+  /*5/25/23 
+  THESE METHODS WILL BE CALLED IN LEVEL, WHERE CHECKING THE ENEMIES IN RANGE WOULD BE COMPLETED
+  */
   public void attacking(Enemy ene) {
     ene.losehealth(damage);
       //hightlight();
   }
   
-  public void highlight() {
-    /* change the color of the enemy, so just load in a new image in the current place of the enemy
-    call losehealth
-    */
+  //public void highlight() {
+  //  /* change the color of the enemy, so just load in a new image in the current place of the enemy
+  //  call losehealth
+  //  */
     
-  }
+  //}
   
   
   
