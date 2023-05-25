@@ -66,5 +66,5 @@ public class Tower {
   towers plaed on tiles, either tower friendly or not
   certain tiles are path that enemies follow
   different nodes for path tiles that enemies follow so making maps would be easy
-  
+  */
 }
