@@ -2,15 +2,15 @@ public class Tower {
   public float damage;
   public float cooldownTime;
   public int range;
-  public int numberofatks;
+  public int attacksbtwabilities;
   public int xcoord;
   public int ycoord;
   
-  public Tower(float dmg, float cd, int rng, int numoatks, int x, int y) {
+  public Tower(float dmg, float cd, int rng, int  aba, int x, int y) {
     damage = dmg;
     cooldownTime = cd;
     range = rng;
-    numberofatks = numoatks;
+    attacksbtwabilities = aba;
     xcoord = x;
     ycoord = y;
   }
