@@ -3,6 +3,7 @@ public class Level {
   private Map gameMap;
   private int health; // drops when enemies cross the end
   private int money; // amount of money that the player has
+  
   private final int towerSquare = 0;
   private final int occupiedTowerSquare = 1;
   private final int occupiedPathSquare = -2; // for when enemies are on the path
@@ -10,14 +11,14 @@ public class Level {
   
   
   public Level(String name) { // normal constructor used in normal games
-    gameBoard = new int[width/20][height/20];
+    gameBoard = new int[width/60][height/60];
     gameMap = new Map(name, new int[]{0, 4}, new int[]{gameBoard.length - 7, 4});
     health = 20;
     money = 500;
   }
   
   public Level(String name, int hp, int mulah) { // cheat constrctor for demo cases
-    gameBoard = new int[width/20][height/20];
+    gameBoard = new int[width/60][height/60];
     gameMap = new Map(name, new int[]{0, 4}, new int[]{gameBoard.length - 7, 4});
     health = hp;
     money = mulah;
@@ -36,7 +37,7 @@ public class Level {
   
   public void loseHP() { // Eventually different enemies will cause different amount of health loss
     int[] end = gameMap.getEnd();
-    if (isEnemyOnSquare(end) {
+    if (isEnemyOnSquare(end)) {
       hp--; 
     }
   }
