@@ -1,14 +1,18 @@
 public class Tower {
   public float damage;
   public float cooldownTime;
-  public float range;
+  public int range;
   public int numberofatks;
+  public int xcoord;
+  public int ycoord;
   
-  public Tower(float dmg, float cd, float rng, int numoatks) {
+  public Tower(float dmg, float cd, int rng, int numoatks, int x, int y) {
     damage = dmg;
     cooldownTime = cd;
     range = rng;
     numberofatks = numoatks;
+    xcoord = x;
+    ycoord = y;
   }
   
   public float returncdt() {
@@ -16,18 +20,23 @@ public class Tower {
   }
   
   
-  public Enemy enemyinrange() {
-    //if theres any enemies in range, whichever is closest to the next node then return that
-    //otherwise return null.
-    return null;
+  //public boolean enemyinrange() {
+  //  //if theres any enemies in range, whichever is closest to the next node then return that
+  //  //otherwise return null.
+  //  //change the for loop, we hard coded this.
+  //  for (int i = xcoord - range; i < x + range && (i > 0 && i < 18); i++) {
+  //    for (int j = ycoord - range; j < ycoord + range && (j > 0 && j < 15); j++) {
+  //      if (grid[i][j] == -2) {
+  //        return 
+  //      }
+  //    }
+  //  }
+  //  return null;
+  //}
   
-  public void attacking() {
-    Enemy attacked = enemyinrange();
-    if (attacked != null) {
-      attacked.losehealth(damage);
+  public void attacking(Enemy ene) {
+    ene.losehealth(damage);
       //hightlight();
-    }
-    
   }
   
   public void highlight() {
