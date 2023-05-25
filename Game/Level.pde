@@ -3,6 +3,10 @@ public class Level {
   private Map gameMap;
   private int health; // drops when enemies cross the end
   private int money; // amount of money that the player has
+  private ArrayList<Tower> towers;
+  private ArrayList<Enemy> enemies;
+  private int[] start;
+  
   
   private final int towerSquare = 0;
   private final int occupiedTowerSquare = 1;
@@ -13,6 +17,9 @@ public class Level {
   public Level(String name) { // normal constructor used in normal games
     gameBoard = new int[width/60][height/60];
     gameMap = new Map(name, new int[]{0, 4}, new int[]{gameBoard.length - 7, 4});
+    start = gameMap.getStart();
+    towers = new ArrayList<Tower>();
+    enemies = new ArrayList<Enemy>();
     health = 20;
     money = 500;
   }
@@ -20,18 +27,20 @@ public class Level {
   public Level(String name, int hp, int mulah) { // cheat constrctor for demo cases
     gameBoard = new int[width/60][height/60];
     gameMap = new Map(name, new int[]{0, 4}, new int[]{gameBoard.length - 7, 4});
+    towers = new ArrayList<Tower>();
+    enemies = new ArrayList<Enemy>();
     health = hp;
     money = mulah;
   }
   
-  // towers would most likely take up a 2x2, however could be changed so square size is bigger so only 1x1
+  // will be called from mouseCLicked function, x and y will the mouseX, mouseY
   public void placeTower(int x, int y) {
-    
+    towers.add(new Tower(1, 1, 5, 10, x/60, y/60); // will change stats later
   }
   
   // will spawn enemy on start, has cooldown time
   public void spawnEnemy() {
-    
+    enemies.add(new Enemy(10, 10)); //placeholder values
   }
   
   
