@@ -11,6 +11,9 @@ made methods.
 
 Continued working on towers, specified special towers, like different elemental towers.
 
+### 5/25/23
+
+Continued working on the tower class, and worked on enemies in addition to trying to fix some bugs in codes.
 
 ## Ashton Dong
 
@@ -21,3 +24,7 @@ Added in more information to map, as well as more codes.
 ### 5/24/23
 
 Finalized map class, began working on the level class, containing the game logic.
+
+### 5/25/23
+
+Worked on the level class, creating maps, and worked on the enemies as well, fixed bugs in codes as well.
