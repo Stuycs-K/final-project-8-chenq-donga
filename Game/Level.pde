@@ -16,8 +16,10 @@ public class Level {
   
   public Level(String name) { // normal constructor used in normal games
     gameBoard = new int[width/60][height/60];
-    gameMap = new Map(name, new int[]{0, 4}, new int[]{gameBoard.length - 7, 4});
+    gameMap = new Map(name, new int[]{0, 4}, new int[]{gameBoard.length - 1, 4});
     start = gameMap.getStart();
+    waypoints();
+    setPath();
     towers = new ArrayList<Tower>();
     enemies = new ArrayList<Enemy>();
     health = 20;
@@ -26,28 +28,32 @@ public class Level {
   
   public Level(String name, int hp, int mulah) { // cheat constrctor for demo cases
     gameBoard = new int[width/60][height/60];
-    gameMap = new Map(name, new int[]{0, 4}, new int[]{gameBoard.length - 7, 4});
+    gameMap = new Map(name, new int[]{0, 4}, new int[]{gameBoard.length - 1, 4});
     towers = new ArrayList<Tower>();
     enemies = new ArrayList<Enemy>();
     health = hp;
     money = mulah;
   }
   
+  public void waypoints() {
+  
+  }
+  
   // will be called from mouseCLicked function, x and y will the mouseX, mouseY
   public void placeTower(int x, int y) {
-    towers.add(new Tower(1, 1, 5, 10, x/60, y/60); // will change stats later
+    towers.add(new Tower(1, 1, 5, 10, x/60, y/60)); // will change stats later
   }
   
   // will spawn enemy on start, has cooldown time
   public void spawnEnemy() {
-    enemies.add(new Enemy(10, 10)); //placeholder values
+    enemies.add(new Enemy(10, 10, 0, 0)); //placeholder values
   }
   
   
   public void loseHP() { // Eventually different enemies will cause different amount of health loss
     int[] end = gameMap.getEnd();
     if (isEnemyOnSquare(end)) {
-      hp--; 
+      health--; 
     }
   }
   
@@ -74,5 +80,30 @@ public class Level {
   
   public int getHealth() {
     return health; 
+  }
+  
+  public void addWaypoint(int[] cord) {
+    gameMap.addWaypoint(cord);
+  }
+  
+  public void setPath() {
+     gameBoard[start[0]][start[1]] = -1;
+     int currentX = start[0];
+     int currentY = start[1];
+     int[] nextLocation = null;
+     while (gameMap.getSize() >= 1) {
+        nextLocation = gameMap.nextLocation();
+        gameBoard[nextLocation[0]][nextLocation[1]] = -1;
+        if (currentX < nextLocation[0]) {
+          for (int i = currentX; i <= nextLocation[0]; i++) {
+            gameBoard[i][currentY] = -1; 
+          }
+        }
+        if (currentY < nextLocation[1]) {
+          for (int i = currentX; i <= nextLocation[1]; i++) {
+            gameBoard[currentX][i] = -1; 
+          }
+        }
+     }
   }
 }
