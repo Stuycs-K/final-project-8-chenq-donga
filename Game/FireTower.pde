@@ -8,4 +8,8 @@ public class FireTower extends Tower {
     //change in the color to red for the enemy
   }
   
+  public void FireAbility
+  
+  public void upgrades
+  
 }

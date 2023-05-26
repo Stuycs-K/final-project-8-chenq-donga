@@ -42,6 +42,19 @@ public class Tower {
       //hightlight();
   }
   
+  public void upgrades(boolean hasMoney) {
+    //check 
+    if (hasMoney) {
+      damage;
+      range;
+      cooldownTime;
+      //add a certain amount to damage, probably needs to be overridden.
+      //add a certain amount to range, or subtract.
+      //change cooldowntime based
+    }
+  }
+  
+  
   //public void highlight() {
   //  /* change the color of the enemy, so just load in a new image in the current place of the enemy
   //  call losehealth
