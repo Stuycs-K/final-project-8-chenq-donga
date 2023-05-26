@@ -1,14 +1,18 @@
 public class Tower {
   public float damage;
   public float cooldownTime;
-  public float range;
-  public int numberofatks;
+  public int range;
+  public int attacksbtwabilities;
+  public int xcoord;
+  public int ycoord;
   
-  public Tower(float dmg, float cd, float rng, int numoatks) {
+  public Tower(float dmg, float cd, int rng, int  aba, int x, int y) {
     damage = dmg;
     cooldownTime = cd;
     range = rng;
-    numberofatks = numoatks;
+    attacksbtwabilities = aba;
+    xcoord = x;
+    ycoord = y;
   }
   
   public float returncdt() {
@@ -16,26 +20,34 @@ public class Tower {
   }
   
   
-  public Enemy enemyinrange() {
-    //if theres any enemies in range, whichever is closest to the next node then return that
-    //otherwise return null.
-    return null;
+  //public boolean enemyinrange() {
+  //  //if theres any enemies in range, whichever is closest to the next node then return that
+  //  //otherwise return null.
+  //  //change the for loop, we hard coded this.
+  //  for (int i = xcoord - range; i < x + range && (i > 0 && i < 18); i++) {
+  //    for (int j = ycoord - range; j < ycoord + range && (j > 0 && j < 15); j++) {
+  //      if (grid[i][j] == -2) {
+  //        return 
+  //      }
+  //    }
+  //  }
+  //  return null;
+  //}
   
-  public void attacking() {
-    Enemy attacked = enemyinrange();
-    if (attacked != null) {
-      attacked.losehealth(damage);
+  /*5/25/23 
+  THESE METHODS WILL BE CALLED IN LEVEL, WHERE CHECKING THE ENEMIES IN RANGE WOULD BE COMPLETED
+  */
+  public void attacking(Enemy ene) {
+    ene.losehealth(damage);
       //hightlight();
-    }
-    
   }
   
-  public void highlight() {
-    /* change the color of the enemy, so just load in a new image in the current place of the enemy
-    call losehealth
-    */
+  //public void highlight() {
+  //  /* change the color of the enemy, so just load in a new image in the current place of the enemy
+  //  call losehealth
+  //  */
     
-  }
+  //}
   
   
   
@@ -54,5 +66,5 @@ public class Tower {
   towers plaed on tiles, either tower friendly or not
   certain tiles are path that enemies follow
   different nodes for path tiles that enemies follow so making maps would be easy
-  
+  */
 }
