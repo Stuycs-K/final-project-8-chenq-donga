@@ -8,7 +8,14 @@ public class FireTower extends Tower {
     //change in the color to red for the enemy
   }
   
-  public void FireAbility
+  public void FireAbility {
+    //check for enemies in range, if in range, change highlight to red after
+    //fire sprite appears.
+    if (inrange()) {
+      
+  }
+  
+  //needs to create an in range function, make this in parent tower class probably 
   
   public void upgrades
   
