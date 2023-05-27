@@ -47,7 +47,7 @@ public class Tower {
     if (hasMoney) {
       damage++;
       range++;
-      cooldownTime++;
+      cooldownTime--;
       //add a certain amount to damage, probably needs to be overridden.
       //add a certain amount to range, or subtract.
       //change cooldowntime based
