@@ -1,7 +1,8 @@
 public class Lightning extends Tower {
   //lightning tower is associated with key 3
-  //set damage to medium, cooldowntime medium, range medium for ice towers. 
-  //(ADD AFTER game works) special abilities could be a freeze ability that the user could press on the screen to freeze the entire map for a few seconds
+  //set damage to high, cooldowntime long, range high for lightning towers. 
+  //(ADD AFTER game works) special abilities could be a thunderbolt ability that the user 
+  //could use to do lots of damage, and it stuns the enemy in place.
   //upgrades would be bigger range, shorter cooldowntimes, and higher damage
   //information needs to be changed from icetower!!!!!
   

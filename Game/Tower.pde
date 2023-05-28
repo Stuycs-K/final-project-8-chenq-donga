@@ -50,7 +50,11 @@ public class Tower {
       cooldownTime--;
       //add a certain amount to damage, probably needs to be overridden.
       //add a certain amount to range, or subtract.
-      //change cooldowntime based
+      //change cooldowntime based on type
+      //change money as well
+      //reduce the money based on what level the tower's on
+      //or just a set amount each time for each upgrade.
+      money--;
     }
   }
   
