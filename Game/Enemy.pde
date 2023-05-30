@@ -4,12 +4,12 @@ public class Enemy {
   //make a money variable
   //idk where money should be kept, but probably in game.
   //will make a money variable in enemy for now
-  public int money;
+  //public int money;
   
   //needs a money drop amount
-  public void dropMoney(float death) {
+  public int dropMoney(float death) {
     if (death) {
-      money += 1;
+      return 1;
       //drop a certain amount of money based on the type of enemy
       //will probably have inherited enemies. 
       //we can make this money scaled to the enemy's health, or just a set amount everytime.
