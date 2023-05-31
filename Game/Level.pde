@@ -44,7 +44,7 @@ public class Level {
   
   // will be called from mouseCLicked function, x and y will the mouseX, mouseY
   public void placeTower(int x, int y) {
-    towers.add(new Tower(1, 1, 5, 10, x/60, y/60)); // will change stats later
+    towers.add(new Tower(1, 1, 5, 10, x, y)); // will change stats later
   }
   
   // will spawn enemy on start, has cooldown time
@@ -79,6 +79,14 @@ public class Level {
   
   public int getHealth() {
     return health; 
+  }
+  
+  public ArrayList<Tower> getTowers() {
+    return towers; 
+  }
+  
+  public ArrayList<Enemy> getEnemies() {
+    return enemies; 
   }
   
   public void addWaypoint(int[] cord) {

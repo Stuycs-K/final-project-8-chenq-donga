@@ -8,6 +8,7 @@ void setup() {
 
 void draw() {
   drawGrid();
+  drawEntities();
   text("Nice", 0, 0);
 }
 
@@ -33,4 +34,16 @@ void drawGrid() {
        square(i*60, j*60, 60);   
     }
   }
+}
+
+void drawEntities() {
+  ArrayList<Tower> t = gameLevel.getTowers();
+  for (int i = 0; i <  t.size(); i++) {
+     Tower tower1 = t.get(i);
+     tower1.displayTower();
+  }
+}
+
+void mouseClicked() {
+  gameLevel.placeTower(mouseX, mouseY); 
 }

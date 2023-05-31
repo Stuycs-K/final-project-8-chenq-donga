@@ -11,7 +11,7 @@ public class Tower {
   //testing
   //image(goblinBomber, 50, 50);
   
-  public Tower(float dmg, float cd, int rng, int  aba, int x, int y) {
+  public Tower(float dmg, float cd, int rng, int aba, int x, int y) {
     damage = dmg;
     cooldownTime = cd;
     range = rng;
@@ -71,6 +71,10 @@ public class Tower {
       return (TowerLevel * 5);
     }
     return 0;
+  }
+  
+  public void displayTower() {
+    image(goblinBomber, xcoord, ycoord);  
   }
   
   
