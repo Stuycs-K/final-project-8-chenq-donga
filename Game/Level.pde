@@ -93,68 +93,19 @@ public class Level {
      while (gameMap.getSize() >= 1) {
         nextLocation = gameMap.nextLocation();
         gameBoard[nextLocation[0]][nextLocation[1]] = -1;
-        if (currentX <= nextLocation[0]) {
-          setPathFoward(currentX, currentY, nextLocation); 
-        }
-        else if (currentX > nextLocation[0]) {
-          setPathBackwards(currentX, currentY, nextLocation); 
-        }
+        for (int i = currentX; i < nextLocation[0]; i++) {
+          if (currentY < nextLocation[1]) {
+            for (int j = currentY; j <= nextLocation[1]; j++) {
+              gameBoard[i][j] = -1;
+            }
+          } else {
+            for (int j = currentY; j >= nextLocation[1]; j--) {
+              gameBoard[i][j] = -1;
+            }
+          }
         currentX = nextLocation[0];
         currentY = nextLocation[1];
-     }
-  }
-  
-  public void setPathFoward(int currentX, int currentY, int[] nextLocation) {
-    for (int i = currentX; i <= nextLocation[0]; i++) {
-        if (currentY <= nextLocation[1]) {
-          for (int j = currentY; j <= nextLocation[1]; j++) {
-            if (i == nextLocation[0]) {
-              i--;
-            }
-            if (j == nextLocation[1]) {
-              j++;
-            }
-            gameBoard[i][j] = -1;
-          }
-        }
-        else if (currentY > nextLocation[0]) {
-          for (int j = currentY; j <= nextLocation[1]; j++) {
-            if (i == nextLocation[0]) {
-              i--;
-            }
-           if (j == nextLocation[1]) {
-            j++;
-          }
-          gameBoard[i][j] = -1;
-        }
-      }    
-    } 
-  }
-  
-    public void setPathBackwards(int currentX, int currentY, int[] nextLocation) {
-    for (int i = currentX; i > nextLocation[0]; i++) {
-        if (currentY <= nextLocation[1]) {
-          for (int j = currentY; j <= nextLocation[1]; j++) {
-            if (i == nextLocation[0]) {
-              i--;
-            }
-            if (j == nextLocation[1]) {
-              j++;
-            }
-            gameBoard[i][j] = -1;
-          }
-        }
-        else if (currentY > nextLocation[0]) {
-          for (int j = currentY; j <= nextLocation[1]; j++) {
-            if (i == nextLocation[0]) {
-              i--;
-            }
-           if (j == nextLocation[1]) {
-            j++;
-          }
-          gameBoard[i][j] = -1;
-        }
-      }    
-    } 
+       }
+    }
   }
 }
