@@ -5,6 +5,11 @@ public class Tower {
   public int attacksbtwabilities;
   public int xcoord;
   public int ycoord;
+  public int TowerLevel;
+  
+  PImage goblinBomber = loadImage("New Piskel.png");
+  //testing
+  //image(goblinBomber, 50, 50);
   
   public Tower(float dmg, float cd, int rng, int  aba, int x, int y) {
     damage = dmg;
@@ -13,6 +18,14 @@ public class Tower {
     attacksbtwabilities = aba;
     xcoord = x;
     ycoord = y;
+  }
+  
+  public int[][] towerRangeVertices() {
+    int[] v1 = new int[]{xcoord-range, ycoord-range};
+    int[] v2 = new int[]{xcoord+range, ycoord-range};
+    int[] v3 = new int[]{xcoord-range, ycoord+range};
+    int[] v4 = new int[]{xcoord+range, ycoord+range};
+    return new int[][]{v1, v2, v3, v4};
   }
   
   public float returncdt() {
@@ -41,6 +54,25 @@ public class Tower {
     ene.losehealth(damage);
       //hightlight();
   }
+  
+  public int upgrades(boolean hasMoney) {
+    //check 
+    if (hasMoney) {
+      TowerLevel++;
+      damage++;
+      range++;
+      cooldownTime--;
+      //add a certain amount to damage, probably needs to be overridden.
+      //add a certain amount to range, or subtract.
+      //change cooldowntime based on type
+      //change money as well
+      //reduce the money based on what level the tower's on
+      //or just a set amount each time for each upgrade.
+      return (TowerLevel * 5);
+    }
+    return 0;
+  }
+  
   
   //public void highlight() {
   //  /* change the color of the enemy, so just load in a new image in the current place of the enemy
