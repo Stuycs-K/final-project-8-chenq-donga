@@ -7,7 +7,7 @@ public class Tower {
   public int ycoord;
   public int TowerLevel;
   
-  PImage goblinBomber = loadImage("New Piskel.png");
+  PImage blueTower = loadImage("Tower1-1.png.png");
   //testing
   //image(goblinBomber, 50, 50);
   
