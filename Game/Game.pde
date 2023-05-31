@@ -8,6 +8,7 @@ void setup() {
 
 void draw() {
   drawGrid();
+  text("Nice", 0, 0);
 }
 
 void drawGrid() {
