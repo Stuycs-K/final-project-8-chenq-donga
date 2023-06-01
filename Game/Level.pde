@@ -42,6 +42,37 @@ public class Level {
     addWaypoint(new int[]{11, 4});
   }
   
+  // what updates the enemies positions; game will handle the drawing
+  
+  // Should run every 15 frames(60 frames per second)
+  public void enemyMove() {
+    for (int i = 0; i < enemies.size(); i++) {
+      Enemy enemy = enemies.get(i);
+      int currentX = enemy.getX();
+      int currentY = enemy.getY();
+      if (enemyMoveHelper(currentX + 16, currentY)) {
+         enemy.move(currentX + 16, currentY);
+      }
+      else {
+         if (enemyMoveHelper(currentX, currentY+30)) {
+            enemy.move(currentX, currentY + 16);
+         }
+         else if (enemyMoveHelper(currentX, currentY-30)) {
+            enemy.move(currentX, currentY - 16);
+         }
+      }
+    }
+  }
+  
+  public boolean enemyMoveHelper(int futureX, int futureY) {
+      int gridX = futureX / 60;
+      int gridY = futureY / 60;
+      if (gameBoard[gridX][gridY] == -1) {
+        return true;
+      }
+      return false;
+  }
+  
   // will be called from mouseCLicked function, x and y will the mouseX, mouseY
   public void placeTower(int x, int y) {
     towers.add(new Tower(1, 1, 5, 10, x, y)); // will change stats later
@@ -49,7 +80,9 @@ public class Level {
   
   // will spawn enemy on start, has cooldown time
   public void spawnEnemy() {
-    enemies.add(new Enemy(10, 10, 0, 0)); //placeholder values
+    int spawnX = start[0]*60 + 30;
+    int spawnY = start[1]*60 + 30;
+    enemies.add(new Enemy(10, 10, spawnX, spawnY)); //placeholder values
   }
   
   // debug, used to test tower attacks
