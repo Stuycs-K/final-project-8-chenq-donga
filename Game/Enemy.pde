@@ -9,6 +9,9 @@ public class Enemy {
   //will make a money variable in enemy for now
   //public int money;
   
+  PImage EnemySprite = loadImage("RedEnemyBalloon1.png");
+  PImage BossMonsterSprite = loadImage("BossMonsterOne.png");
+  
   //needs a money drop amount
   public int dropMoney(float death) {
     if (isDead()) {
@@ -77,5 +80,9 @@ public class Enemy {
   public void move(int xOffset, int yOffset) {
     xcoord += xOffset;
     ycoord += yOffset;
+  }
+  
+  public void displayEnemy() {
+    image(EnemySprite, xcoord, ycoord);  
   }
 }
