@@ -7,10 +7,6 @@ public class Level {
   private ArrayList<Enemy> enemies;
   private int[] start;
   
-  
-  private final int towerSquare = 0;
-  private final int occupiedTowerSquare = 1;
-  private final int occupiedPathSquare = -2; // for when enemies are on the path
   private final int path = -1;
   
   
@@ -142,11 +138,11 @@ public class Level {
         for (int i = currentX; i < nextLocation[0]; i++) {
           if (currentY < nextLocation[1]) {
             for (int j = currentY; j <= nextLocation[1]; j++) {
-              gameBoard[i][j] = -1;
+              gameBoard[i][j] = path;
             }
           } else {
             for (int j = currentY; j >= nextLocation[1]; j--) {
-              gameBoard[i][j] = -1;
+              gameBoard[i][j] = path;
             }
           }
         currentX = nextLocation[0];
