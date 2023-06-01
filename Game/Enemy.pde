@@ -70,4 +70,13 @@ public class Enemy {
     xcoord += xOffset;
     ycoord += yOffset;
   }
+  
+  public void displayEnemy() {
+    //placeholder image
+    
+    //will add sprite later, this is just a circle for now
+    
+    //image(enemySprite, xcoord, ycoord);  
+    circle(xcoord, ycoord, 15);
+  }
 }
