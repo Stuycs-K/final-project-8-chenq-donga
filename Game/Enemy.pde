@@ -1,8 +1,9 @@
 public class Enemy {
-  public float hp;
-  public float speed;
-  public int xcoord;
-  public int ycoord;
+  private float hp;
+  private float speed;
+  private int xcoord;
+  private int ycoord;
+
   //make a money variable
   //idk where money should be kept, but probably in game.
   //will make a money variable in enemy for now
@@ -34,13 +35,25 @@ public class Enemy {
     ycoord = y;
   }
   
+
   public void losehealth(float damage) {
     if (!death()) {
     hp -= damage;
+
+  public boolean inRange(int[][] range) {
+    if (xcoord > range[0][0] && xcoord < range[1][0] && ycoord > range[0][1] && ycoord < range[2][1]) {
+      return true; 
+    }
+    return false;
+  }
+  
+  public void loseHealth(float damage, int[][] range) {
+    if (inRange(range)) {
+      hp -= damage;
     }
   }
   
-  public boolean death() {
+  public boolean isDead() {
     if (hp <= 0) { 
       return true;
     }

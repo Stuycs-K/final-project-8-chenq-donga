@@ -1,11 +1,11 @@
 public class Tower {
-  public float damage;
-  public float cooldownTime;
-  public int range;
-  public int attacksbtwabilities;
-  public int xcoord;
-  public int ycoord;
-  public int TowerLevel;
+  private float damage;
+  private float cooldownTime;
+  private int range;
+  private int attacksbtwabilities;
+  private int xcoord;
+  private int ycoord;
+  private int TowerLevel;
   
   PImage goblinBomber = loadImage("New Piskel.png");
   //testing
@@ -77,6 +77,25 @@ public class Tower {
     image(goblinBomber, xcoord, ycoord);  
   }
   
+    public float getDamage() {
+     return damage; 
+  }
+  
+  public float getCD() {
+     return cooldownTime; 
+  }
+  
+  public int[][] getRange() {
+    int[] v1 = new int[]{xcoord-range, ycoord-range};
+    int[] v2 = new int[]{xcoord+range, ycoord-range};
+    int[] v3 = new int[]{xcoord-range, ycoord+range};
+    int[] v4 = new int[]{xcoord+range, ycoord+range};
+    return new int[][]{v1, v2, v3, v4};
+  }
+  
+  public int getLevel() {
+    return TowerLevel; 
+  }
   
   //public void highlight() {
   //  /* change the color of the enemy, so just load in a new image in the current place of the enemy
