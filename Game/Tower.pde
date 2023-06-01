@@ -1,17 +1,17 @@
 public class Tower {
-  public float damage;
-  public float cooldownTime;
-  public int range;
-  public int attacksbtwabilities;
-  public int xcoord;
-  public int ycoord;
-  public int TowerLevel;
+  private float damage;
+  private float cooldownTime;
+  private int range;
+  private int attacksbtwabilities;
+  private int xcoord;
+  private int ycoord;
+  private int TowerLevel;
   
-  PImage blueTower = loadImage("Tower1-1.png.png");
+  PImage goblinBomber = loadImage("New Piskel.png");
   //testing
   //image(goblinBomber, 50, 50);
   
-  public Tower(float dmg, float cd, int rng, int  aba, int x, int y) {
+  public Tower(float dmg, float cd, int rng, int aba, int x, int y) {
     damage = dmg;
     cooldownTime = cd;
     range = rng;
@@ -19,19 +19,7 @@ public class Tower {
     xcoord = x;
     ycoord = y;
   }
-  
-  public int[][] towerRangeVertices() {
-    int[] v1 = new int[]{x-range, y-range};
-    int[] v2 = new int[]{x+range, y-range};
-    int[] v3 = new int[]{x-range, y+range};
-    int[] v4 = new int[]{x+range, y+range};
-    return new int[][]{v1, v2, v3, v4};
-  }
-  
-  public float returncdt() {
-    return cooldownTime;
-  }
-  
+
   
   //public boolean enemyinrange() {
   //  //if theres any enemies in range, whichever is closest to the next node then return that
@@ -55,7 +43,7 @@ public class Tower {
       //hightlight();
   }
   
-  public void upgrades(boolean hasMoney) {
+  public int upgrades(boolean hasMoney) {
     //check 
     if (hasMoney) {
       TowerLevel++;
@@ -70,8 +58,32 @@ public class Tower {
       //or just a set amount each time for each upgrade.
       return (TowerLevel * 5);
     }
+    return 0;
   }
   
+  public void displayTower() {
+    image(goblinBomber, xcoord, ycoord);  
+  }
+  
+    public float getDamage() {
+     return damage; 
+  }
+  
+  public float getCD() {
+     return cooldownTime; 
+  }
+  
+  public int[][] getRange() {
+    int[] v1 = new int[]{xcoord-range, ycoord-range};
+    int[] v2 = new int[]{xcoord+range, ycoord-range};
+    int[] v3 = new int[]{xcoord-range, ycoord+range};
+    int[] v4 = new int[]{xcoord+range, ycoord+range};
+    return new int[][]{v1, v2, v3, v4};
+  }
+  
+  public int getLevel() {
+    return TowerLevel; 
+  }
   
   //public void highlight() {
   //  /* change the color of the enemy, so just load in a new image in the current place of the enemy

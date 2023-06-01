@@ -1,6 +1,8 @@
 public class Enemy {
-  public float hp;
-  public float speed;
+  private float hp;
+  private float speed;
+  private int xcoord;
+  private int ycoord;
   //make a money variable
   //idk where money should be kept, but probably in game.
   //will make a money variable in enemy for now
@@ -8,7 +10,7 @@ public class Enemy {
   
   //needs a money drop amount
   public int dropMoney(float death) {
-    if (death) {
+    if (death()) {
       return 1;
       //drop a certain amount of money based on the type of enemy
       //will probably have inherited enemies. 
@@ -22,20 +24,30 @@ public class Enemy {
       //then 5, then 10 for bosses
       //i think that'd be fair.
     }
+    return 0;
   }
   
-  public Enemy(int hachepee, int speede) {
+  public Enemy(int hachepee, int speede, int x, int y) {
     hp = hachepee;
     speed = speede;
+    xcoord = x;
+    ycoord = y;
   }
   
-  public void losehealth(float damage) {
-    if (!death) {
-    hp -= damage;
+  public boolean inRange(int[][] range) {
+    if (xcoord > range[0][0] && xcoord < range[1][0] && ycoord > range[0][1] && ycoord < range[2][1]) {
+      return true; 
+    }
+    return false;
+  }
+  
+  public void loseHealth(float damage, int[][] range) {
+    if (inRange(range)) {
+      hp -= damage;
     }
   }
   
-  public boolean death() {
+  public boolean isDead() {
     if (hp <= 0) { 
       return true;
     }
@@ -46,4 +58,16 @@ public class Enemy {
     return speed;
   }
     
+  public int getX() {
+    return xcoord; 
+  }
+  
+  public int getY() {
+    return ycoord; 
+  }
+  
+  public void move(int xOffset, int yOffset) {
+    xcoord += xOffset;
+    ycoord += yOffset;
+  }
 }
