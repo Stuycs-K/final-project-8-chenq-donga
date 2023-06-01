@@ -45,5 +45,10 @@ void drawEntities() {
 }
 
 void mouseClicked() {
-  gameLevel.placeTower(mouseX, mouseY); 
+  if (mouseButton == LEFT) {
+    gameLevel.placeTower(mouseX, mouseY); 
+  }
+  else if (mouseButton == RIGHT) {
+    gameLevel.spawnEnemy(mouseX, mouseY);
+  }
 }

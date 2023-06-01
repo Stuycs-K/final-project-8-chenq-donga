@@ -36,25 +36,18 @@ public class Level {
   }
   
   public void waypoints() {
-    addWaypoint(new int[]{3, 4});
     addWaypoint(new int[]{3, 10});
-    addWaypoint(new int[]{11, 10});
     addWaypoint(new int[]{11, 4});
   }
   
   // will be called from mouseCLicked function, x and y will the mouseX, mouseY
   public void placeTower(int x, int y) {
-    towers.add(new Tower(1, 1, 5, 10, x, y)); // will change stats later
+    towers.add(new Tower(1, 1, 5, 10, x/60, y/60)); // will change stats later
   }
   
   // will spawn enemy on start, has cooldown time
   public void spawnEnemy() {
     enemies.add(new Enemy(10, 10, 0, 0)); //placeholder values
-  }
-  
-  // debug, used to test tower attacks
-  public void spawnEnemyDebug(int x, int y) {
-    enemies.add(new Enemy(10, 10, x, y)); //placeholder values
   }
   
   
@@ -86,39 +79,73 @@ public class Level {
     return health; 
   }
   
-  public ArrayList<Tower> getTowers() {
-    return towers; 
-  }
-  
-  public ArrayList<Enemy> getEnemies() {
-    return enemies; 
-  }
-  
   public void addWaypoint(int[] cord) {
     gameMap.addWaypoint(cord);
   }
   
   public void setPath() {
-     gameBoard[start[0]][start[1]] = -1;
-     int currentX = start[0];
-     int currentY = start[1];
-     int[] nextLocation = null;
-     while (gameMap.getSize() >= 1) {
-        nextLocation = gameMap.nextLocation();
-        gameBoard[nextLocation[0]][nextLocation[1]] = -1;
-        for (int i = currentX; i < nextLocation[0]; i++) {
-          if (currentY < nextLocation[1]) {
-            for (int j = currentY; j <= nextLocation[1]; j++) {
-              gameBoard[i][j] = -1;
-            }
-          } else {
-            for (int j = currentY; j >= nextLocation[1]; j--) {
-              gameBoard[i][j] = -1;
-            }
-          }
-        currentX = nextLocation[0];
-        currentY = nextLocation[1];
-       }
+    int currentX = start[0];
+    int currentY = start[1];
+    while (gameMap.size() >= 1) {
+      int[] nextLocation = gameMap.nextLocation();
+      markLine(currentX, currentY, nextLocation[0], nextLocation[1]);
+      currentX = nextLocation[0];
+      currentY = nextLocation[1];
     }
   }
+  
+void markLine(int startX, int startY, int endX, int endY) {
+  int deltaX = Math.abs(endX - startX);
+  int deltaY = Math.abs(endY - startY);
+  int stepX, stepY;
+  int x = startX;
+  int y = startY;
+  
+  if (startX < endX) {
+    stepX = 1;
+  } else {
+    stepX = -1;
+  }
+  
+  if (startY < endY) {
+    stepY = 1;
+  } else {
+    stepY = -1;
+  }
+
+  gameBoard[x][y] = -1;
+
+  if (deltaX > deltaY) {
+    int error = deltaX / 2;
+    while (x != endX) {
+      x += stepX;
+      error -= deltaY;
+      if (error < 0) {
+        y += stepY;
+        error += deltaX;
+      }
+      gameBoard[x][y] = -1;
+    }
+  } else {
+    int error = deltaY / 2;
+    while (y != endY) {
+      y += stepY;
+      error -= deltaX;
+      if (error < 0) {
+        x += stepX;
+        error += deltaY;
+      }
+      gameBoard[x][y] = -1;
+    }
+  }
+  
+  // Adjust the path representation
+  for (int i = startY; i != endY; i += stepY) {
+    gameBoard[endX][i] = -1;
+  }
+  for (int j = startX; j != endX; j += stepX) {
+    gameBoard[j][endY] = -1;
+  }
+}
+
 }
