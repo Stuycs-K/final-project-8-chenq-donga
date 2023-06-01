@@ -10,7 +10,7 @@ public class Enemy {
   //public int money;
   
   //needs a money drop amount
-  public int dropMoney(float death) {
+  public int dropMoney() {
     if (isDead()) {
       return 1;
       //drop a certain amount of money based on the type of enemy

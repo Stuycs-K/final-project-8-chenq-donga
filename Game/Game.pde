@@ -7,6 +7,7 @@ void setup() {
 }
 
 void draw() {
+  gameLevel.enemyMove();
   drawGrid();
   drawEntities();
   text("Nice", 0, 0);
