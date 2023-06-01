@@ -11,7 +11,7 @@ public class Enemy {
   
   //needs a money drop amount
   public int dropMoney(float death) {
-    if (death()) {
+    if (isDead()) {
       return 1;
       //drop a certain amount of money based on the type of enemy
       //will probably have inherited enemies. 
@@ -37,8 +37,10 @@ public class Enemy {
   
 
   public void losehealth(float damage) {
-    if (!death()) {
+    if (!isDead()) {
     hp -= damage;
+    }
+  }
 
   public boolean inRange(int[][] range) {
     if (xcoord > range[0][0] && xcoord < range[1][0] && ycoord > range[0][1] && ycoord < range[2][1]) {
