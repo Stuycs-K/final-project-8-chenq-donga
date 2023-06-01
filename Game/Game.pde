@@ -49,6 +49,6 @@ void mouseClicked() {
     gameLevel.placeTower(mouseX, mouseY); 
   }
   else if (mouseButton == RIGHT) {
-    gameLevel.spawnEnemy(mouseX, mouseY);
+    gameLevel.spawnEnemyDebug(mouseX, mouseY);
   }
 }
