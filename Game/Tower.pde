@@ -10,7 +10,6 @@ public class Tower {
   PImage BlueTower = loadImage("BlueTowerTestingTwo.png");
   PImage BlueTowerUp = loadImage("BlueTowerLevelTwo.png");
   //testing
-  //image(goblinBomber, 50, 50);
   
   public Tower(float dmg, float cd, int rng, int aba, int x, int y) {
     damage = dmg;
