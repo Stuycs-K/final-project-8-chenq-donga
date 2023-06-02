@@ -1,15 +1,26 @@
 Level gameLevel;
+int towerAmount;
+int prevTowerAmount;
 
 void setup() {
   size(1080, 900);
   gameLevel = new Level("Test");
-  
+  towerAmount = 0;
+  prevTowerAmount = 0;
+  drawGrid();
 }
 
 void draw() {
+  background(255);
   drawGrid();
   drawEntities();
-  text("Nice", 0, 0);
+  tick();
+  text(frameCount, 10, 10);
+  drawMoneyHealth();
+}
+
+void tick() {
+  gameLevel.enemyMove();
 }
 
 void drawGrid() {
@@ -36,19 +47,34 @@ void drawGrid() {
   }
 }
 
+void drawMoneyHealth() {
+   text("Health: " + gameLevel.getHealth(),10, 30); 
+   text("Health: " + gameLevel.getMoney(),10, 60);
+}
+
 void drawEntities() {
-  ArrayList<Tower> t = gameLevel.getTowers();
-  for (int i = 0; i <  t.size(); i++) {
-     Tower tower1 = t.get(i);
-     tower1.displayTower();
+  fill(0); 
+  // if (prevTowerAmount != towerAmount) { 
+    ArrayList<Tower> t = gameLevel.getTowers();
+     for (int i = 0; i <  t.size(); i++) {
+       Tower tower1 = t.get(i);
+       tower1.displayTower();
+    }
+    prevTowerAmount++;
+  // }
+  ArrayList<Enemy> enemies = gameLevel.getEnemies();
+  for (int i = 0; i < enemies.size(); i++) {
+    Enemy enemy1 = enemies.get(i);
+    enemy1.displayEnemy();
   }
 }
 
 void mouseClicked() {
   if (mouseButton == LEFT) {
     gameLevel.placeTower(mouseX, mouseY); 
+    towerAmount++;
   }
-  else if (mouseButton == RIGHT) {
+  else if (mouseButton == RIGHT) { //<>//
     gameLevel.spawnEnemyDebug(mouseX, mouseY);
   }
 }

@@ -3,14 +3,13 @@ public class Enemy {
   private float speed;
   private int xcoord;
   private int ycoord;
-  private String direction;
+
   //make a money variable
   //idk where money should be kept, but probably in game.
   //will make a money variable in enemy for now
   //public int money;
-  
   //needs a money drop amount
-  public int dropMoney(float death) {
+  public int dropMoney() {
     if (isDead()) {
       return 1;
       //drop a certain amount of money based on the type of enemy
@@ -33,9 +32,15 @@ public class Enemy {
     speed = speede;
     xcoord = x;
     ycoord = y;
-    direction = "right";
   }
   
+
+  public void losehealth(float damage) {
+    if (!isDead()) {
+    hp -= damage;
+    }
+  }
+
   public boolean inRange(int[][] range) {
     if (xcoord > range[0][0] && xcoord < range[1][0] && ycoord > range[0][1] && ycoord < range[2][1]) {
       return true; 
@@ -68,32 +73,8 @@ public class Enemy {
     return ycoord; 
   }
   
-  public void move() {
-    if (direction.equals("up")) {
-       ycoord--; 
-    }
-    else if (direction.equals("down")) {
-       ycoord++; 
-    }
-    else if (direction.equals("right")) {
-       xcoord++; 
-    }
-  }
-  
-  public void setDirection(String direc) {
-     direction = direc; 
-  }
-  
-  public String getDirection() {
-     return direction; 
-  }
-  
-  public void displayEnemy() {
-    //placeholder image
-    
-    //will add sprite later, this is just a circle for now
-    
-    //image(enemySprite, xcoord, ycoord);  
-    circle(xcoord, ycoord, 15);
+  public void move(int xOffset, int yOffset) {
+    xcoord += xOffset;
+    ycoord += yOffset;
   }
 }

@@ -50,10 +50,6 @@ public class Tower {
   /*5/25/23 
   THESE METHODS WILL BE CALLED IN LEVEL, WHERE CHECKING THE ENEMIES IN RANGE WOULD BE COMPLETED
   */
-  public void attacking(Enemy ene) {
-    ene.losehealth(damage);
-      //hightlight();
-  }
   
   public int upgrades(boolean hasMoney) {
     //check 

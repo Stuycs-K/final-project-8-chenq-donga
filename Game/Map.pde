@@ -20,8 +20,8 @@ public class Map {
   }
   
   // get end, does not get removed until it's the final thing
-  public int[] getEnd() { // set the end
-    return pathNodes.get(pathNodes.size() - 1);
+  public int[] getEnd() {
+    return pathNodes.getLast();
   }
   
   // Will always add to the index right before the last

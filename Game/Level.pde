@@ -6,18 +6,15 @@ public class Level {
   private ArrayList<Tower> towers;
   private ArrayList<Enemy> enemies;
   private int[] start;
+  private int[] end; 
   
-  
-  private final int towerSquare = 0;
-  private final int occupiedTowerSquare = 1;
-  private final int occupiedPathSquare = -2; // for when enemies are on the path
   private final int path = -1;
-  
   
   public Level(String name) { // normal constructor used in normal games
     gameBoard = new int[width/60][height/60];
-    gameMap = new Map(name, new int[]{0, 4}, new int[]{gameBoard.length - 1, 4});
-    start = gameMap.getStart();
+    start = new int[]{0, 4};
+    end = new int[]{gameBoard.length - 1, 4};
+    gameMap = new Map(name, start, end);
     waypoints();
     setPath();
     towers = new ArrayList<Tower>();
@@ -44,30 +41,52 @@ public class Level {
   
   // what updates the enemies positions; game will handle the drawing
   
-  // Should run every 15 frames(60 frames per second)
+  // Should run every frames(60 frames per second)
   public void enemyMove() {
-    for (int i = 0; i < enemies.size(); i++) {
-      Enemy enemy = enemies.get(i);
-      int currentX = enemy.getX();
-      int currentY = enemy.getY();
-      if (enemyMoveHelper(currentX + 16, currentY)) {
-         enemy.move(currentX + 16, currentY);
-      }
-      else {
-         if (enemyMoveHelper(currentX, currentY+30)) {
-            enemy.move(currentX, currentY + 16);
-         }
-         else if (enemyMoveHelper(currentX, currentY-30)) {
-            enemy.move(currentX, currentY - 16);
-         }
-      }
+  for (int i = 0; i < enemies.size(); i++) {
+    Enemy enemy = enemies.get(i);
+    int currentX = enemy.getX();
+    int currentY = enemy.getY();
+    String currentDirection = enemy.getDirection();
+    
+    int nextX = currentX;
+    int nextY = currentY;
+    
+    if (currentDirection.equals("right")) {
+      nextX = currentX + 1;
+    } else if (currentDirection.equals("down")) {
+      nextY = currentY + 1;
+    } else if (currentDirection.equals("up")) {
+      nextY = currentY - 1;
+    }
+    
+    if (gameBoard[nextX / 60][nextY / 60] == -1) {
+      enemy.move();
+    } else {
+      String newDirection = getNewDirection(gameBoard, currentX, currentY);
+      enemy.setDirection(newDirection);
+      enemy.move();
     }
   }
-  
+}
+
+  private String getNewDirection(int[][] gameBoard, int currentX, int currentY) {
+    if (gameBoard[(currentX + 30) / 60][currentY / 60] == -1) {
+      return "right";
+    } else if (gameBoard[currentX / 60][(currentY + 30) / 60] == -1) {
+      return "down";
+    } else if (gameBoard[currentX / 60][(currentY - 30) / 60] == -1) {
+      return "up";
+    }
+    // If no valid direction is found, default to right
+    return "right";
+  }
+
+
   public boolean enemyMoveHelper(int futureX, int futureY) {
       int gridX = futureX / 60;
       int gridY = futureY / 60;
-      if (gameBoard[gridX][gridY] == -1) {
+      if ((gridX < gameBoard.length && gridY < gameBoard[0].length) && gameBoard[gridX][gridY] == -1) {
         return true;
       }
       return false;
@@ -92,23 +111,15 @@ public class Level {
   
   
   public void loseHP() { // Eventually different enemies will cause different amount of health loss
-    int[] end = gameMap.getEnd();
-    if (isEnemyOnSquare(end)) {
-      health--; 
-    }
+    health--; 
   }
   
   public int[][] getBoard() {
     return gameBoard;
   }
   
-  private boolean isEnemyOnSquare(int[] cord) {
-    if (gameBoard[cord[0]][cord[1]] == -2) {
-      return true; 
-    }
-    else {
-      return false;
-    }
+  public int[] convertToGrid(int x, int y) {
+    return new int[]{x / 60, y / 60};
   }
   
   public int getMoney() {
@@ -142,11 +153,11 @@ public class Level {
         for (int i = currentX; i < nextLocation[0]; i++) {
           if (currentY < nextLocation[1]) {
             for (int j = currentY; j <= nextLocation[1]; j++) {
-              gameBoard[i][j] = -1;
+              gameBoard[i][j] = path;
             }
           } else {
             for (int j = currentY; j >= nextLocation[1]; j--) {
-              gameBoard[i][j] = -1;
+              gameBoard[i][j] = path;
             }
           }
         currentX = nextLocation[0];
