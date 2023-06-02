@@ -3,15 +3,20 @@ public class Enemy {
   private float speed;
   private int xcoord;
   private int ycoord;
+  private String direction;
+  PImage EnemySprite;
   //make a money variable
   //idk where money should be kept, but probably in game.
   //will make a money variable in enemy for now
   //public int money;
   
+  // PImage EnemySprite = loadImage("RedEnemyBalloon1.png");
+  // PImage BossMonsterSprite = loadImage("BossMonsterOne.png");
+  
   //needs a money drop amount
-  public int dropMoney(float death) {
-    if (death()) {
-      return 1;
+  public int dropMoney() {
+    if (isDead()) {
+      return 100;
       //drop a certain amount of money based on the type of enemy
       //will probably have inherited enemies. 
       //we can make this money scaled to the enemy's health, or just a set amount everytime.
@@ -27,11 +32,18 @@ public class Enemy {
     return 0;
   }
   
-  public Enemy(int hachepee, int speede, int x, int y) {
+  public Enemy(int hachepee, int speede, int x, int y, boolean isBoss) {
     hp = hachepee;
     speed = speede;
     xcoord = x;
     ycoord = y;
+    direction = "right";
+    if (isBoss) {
+       EnemySprite = loadImage("BossMonsterOne.png");
+    }
+    else {
+       EnemySprite = loadImage("RedBalloonEnemyTesting.png");
+    }
   }
   
   public boolean inRange(int[][] range) {
@@ -41,14 +53,16 @@ public class Enemy {
     return false;
   }
   
-  public void loseHealth(float damage, int[][] range) {
+  public boolean loseHealth(float damage, int[][] range) {
     if (inRange(range)) {
-      hp -= damage;
+      hp = hp - damage;
+      return true;
     }
+    return false;
   }
   
   public boolean isDead() {
-    if (hp <= 0) { 
+    if (!(hp > 0)) { 
       return true;
     }
     return false;
@@ -56,6 +70,10 @@ public class Enemy {
   
   public float getspeed() {
     return speed;
+  }
+  
+  public float getHealth() {
+    return hp;
   }
     
   public int getX() {
@@ -66,17 +84,30 @@ public class Enemy {
     return ycoord; 
   }
   
-  public void move(int xOffset, int yOffset) {
-    xcoord += xOffset;
-    ycoord += yOffset;
+  public void move() {
+    if (direction.equals("up")) {
+       ycoord--; 
+    }
+    else if (direction.equals("down")) {
+       ycoord++; 
+    }
+    else if (direction.equals("right")) {
+       xcoord++; 
+    }
   }
   
+  public void setDirection(String direc) {
+     direction = direc; 
+  }
+  
+  public String getDirection() {
+     return direction; 
+  }
+   
   public void displayEnemy() {
-    //placeholder image
-    
-    //will add sprite later, this is just a circle for now
-    
-    //image(enemySprite, xcoord, ycoord);  
-    circle(xcoord, ycoord, 15);
+    image(EnemySprite, xcoord, ycoord);
+    textSize(15);
+    text("Health : ", getX() - 30, getY() + 45);
+    text(getHealth(), getX() + 15, getY() + 45);
   }
 }

@@ -1,15 +1,15 @@
 public class Tower {
   private float damage;
-  private float cooldownTime;
+  private float cooldownTime; // measured in frames
   private int range;
   private int attacksbtwabilities;
   private int xcoord;
   private int ycoord;
   private int TowerLevel;
   
-  PImage goblinBomber = loadImage("New Piskel.png");
+  PImage BlueTower = loadImage("BlueTowerTestingTwo.png");
+  PImage BlueTowerUp = loadImage("BlueTowerLevelTwo.png");
   //testing
-  //image(goblinBomber, 50, 50);
   
   public Tower(float dmg, float cd, int rng, int aba, int x, int y) {
     damage = dmg;
@@ -19,7 +19,19 @@ public class Tower {
     xcoord = x;
     ycoord = y;
   }
-
+  
+  public int[][] towerRangeVertices() {
+    int[] v1 = new int[]{xcoord-range, ycoord-range};
+    int[] v2 = new int[]{xcoord+range, ycoord-range};
+    int[] v3 = new int[]{xcoord-range, ycoord+range};
+    int[] v4 = new int[]{xcoord+range, ycoord+range};
+    return new int[][]{v1, v2, v3, v4};
+  }
+  
+  public float returncdt() {
+    return cooldownTime;
+  }
+  
   
   //public boolean enemyinrange() {
   //  //if theres any enemies in range, whichever is closest to the next node then return that
@@ -38,11 +50,7 @@ public class Tower {
   /*5/25/23 
   THESE METHODS WILL BE CALLED IN LEVEL, WHERE CHECKING THE ENEMIES IN RANGE WOULD BE COMPLETED
   */
-  public void attacking(Enemy ene) {
-    ene.losehealth(damage);
-      //hightlight();
-  }
-  
+
   public int upgrades(boolean hasMoney) {
     //check 
     if (hasMoney) {
@@ -62,7 +70,7 @@ public class Tower {
   }
   
   public void displayTower() {
-    image(goblinBomber, xcoord, ycoord);  
+    image(BlueTower, xcoord, ycoord);  
   }
   
     public float getDamage() {

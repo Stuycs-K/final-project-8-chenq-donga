@@ -15,13 +15,13 @@ public class Map {
     return mapName;
   }
   
-  public void getStart() { // sets the start o
+  public int[] getStart() { // sets the start o
     return pathNodes.removeFirst();
   }
   
   // get end, does not get removed until it's the final thing
-  public void getEnd() { // set the end
-    return pathNodes.get(pathNodes.size() - 1);
+  public int[] getEnd() {
+    return pathNodes.getLast();
   }
   
   // Will always add to the index right before the last
@@ -30,12 +30,12 @@ public class Map {
       pathNodes.add(1, cord); 
     }
     else {
-      pathNodes.add(path.size() - 1, cord); 
+      pathNodes.add(pathNodes.size() - 1, cord); 
     }
   }
   
   // returns the next location AND removes it from the linkList
-  public int[] NextLocation() { 
+  public int[] nextLocation() { 
     return pathNodes.removeFirst(); 
   }
   
