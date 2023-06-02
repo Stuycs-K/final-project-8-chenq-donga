@@ -81,8 +81,6 @@ public class Level {
     return "right";
   }  
 
-
-
   public boolean enemyMoveHelper(int futureX, int futureY) {
       int gridX = futureX / 60;
       int gridY = futureY / 60;
@@ -97,8 +95,6 @@ public class Level {
       Enemy enemy = enemies.get(i);
       int currentX = enemy.getX();
       if (currentX >= end[0]*61) {
-        print(end[0]*50);
-        print(currentX);
         enemies.remove(i);
         health--;
         i--; // Decrement i to account for the removed enemy
@@ -194,4 +190,14 @@ public class Level {
      }
   }
   
+  public void removeDeadEnemies() {
+    for (int i = 0; i < enemies.size(); i++) {
+      Enemy enemy = enemies.get(i);
+      if (enemy.dropMoney() == 100) {
+        money += 100;
+        enemies.remove(i);
+        i--; // Decrement i to account for the removed enemy
+      }
+    }
+  } 
 }

@@ -14,9 +14,9 @@ public class Enemy {
   // PImage BossMonsterSprite = loadImage("BossMonsterOne.png");
   
   //needs a money drop amount
-  public int dropMoney(float death) {
+  public int dropMoney() {
     if (isDead()) {
-      return 1;
+      return 100;
       //drop a certain amount of money based on the type of enemy
       //will probably have inherited enemies. 
       //we can make this money scaled to the enemy's health, or just a set amount everytime.
@@ -54,15 +54,16 @@ public class Enemy {
   }
   
   public boolean loseHealth(float damage, int[][] range) {
+    print("Health: " + hp);
     if (inRange(range)) {
-      hp -= damage;
+      hp = hp - damage;
       return true;
     }
     return false;
   }
   
   public boolean isDead() {
-    if (hp <= 0) { 
+    if (!(hp > 0)) { 
       return true;
     }
     return false;

@@ -33,6 +33,7 @@ void draw() {
 void tick() {
   gameLevel.enemyMove();
   gameLevel.attack();
+  gameLevel.removeDeadEnemies();
 }
 
 void drawGrid() {
