@@ -6,14 +6,15 @@ public class Level {
   private ArrayList<Tower> towers;
   private ArrayList<Enemy> enemies;
   private int[] start;
+  private int[] end; 
   
   private final int path = -1;
   
-  
   public Level(String name) { // normal constructor used in normal games
     gameBoard = new int[width/60][height/60];
-    gameMap = new Map(name, new int[]{0, 4}, new int[]{gameBoard.length - 1, 4});
-    start = gameMap.getStart();
+    start = new int[]{0, 4};
+    end = new int[]{gameBoard.length - 1, 4};
+    gameMap = new Map(name, start, end);
     waypoints();
     setPath();
     towers = new ArrayList<Tower>();
@@ -42,24 +43,46 @@ public class Level {
   
   // Should run every frames(60 frames per second)
   public void enemyMove() {
-    for (int i = 0; i < enemies.size(); i++) {
-      Enemy enemy = enemies.get(i);
-      int currentX = enemy.getX();
-      int currentY = enemy.getY();
-      if (enemyMoveHelper(currentX + 1, currentY)) {
-         enemy.move(currentX + 1, currentY);
-      }
-      else {
-         if (enemyMoveHelper(currentX, currentY+1)) {
-            enemy.move(currentX, currentY + 1);
-         }
-         else if (enemyMoveHelper(currentX, currentY-1)) {
-            enemy.move(currentX, currentY - 1);
-         }
-      }
+  for (int i = 0; i < enemies.size(); i++) {
+    Enemy enemy = enemies.get(i);
+    int currentX = enemy.getX();
+    int currentY = enemy.getY();
+    String currentDirection = enemy.getDirection();
+    
+    int nextX = currentX;
+    int nextY = currentY;
+    
+    if (currentDirection.equals("right")) {
+      nextX = currentX + 1;
+    } else if (currentDirection.equals("down")) {
+      nextY = currentY + 1;
+    } else if (currentDirection.equals("up")) {
+      nextY = currentY - 1;
+    }
+    
+    if (gameBoard[nextX / 60][nextY / 60] == -1) {
+      enemy.move();
+    } else {
+      String newDirection = getNewDirection(gameBoard, currentX, currentY);
+      enemy.setDirection(newDirection);
+      enemy.move();
     }
   }
-  
+}
+
+  private String getNewDirection(int[][] gameBoard, int currentX, int currentY) {
+    if (gameBoard[(currentX + 30) / 60][currentY / 60] == -1) {
+      return "right";
+    } else if (gameBoard[currentX / 60][(currentY + 30) / 60] == -1) {
+      return "down";
+    } else if (gameBoard[currentX / 60][(currentY - 30) / 60] == -1) {
+      return "up";
+    }
+    // If no valid direction is found, default to right
+    return "right";
+  }
+
+
   public boolean enemyMoveHelper(int futureX, int futureY) {
       int gridX = futureX / 60;
       int gridY = futureY / 60;
@@ -88,23 +111,15 @@ public class Level {
   
   
   public void loseHP() { // Eventually different enemies will cause different amount of health loss
-    int[] end = gameMap.getEnd();
-    if (isEnemyOnSquare(end)) {
-      health--; 
-    }
+    health--; 
   }
   
   public int[][] getBoard() {
     return gameBoard;
   }
   
-  private boolean isEnemyOnSquare(int[] cord) {
-    if (gameBoard[cord[0]][cord[1]] == -2) {
-      return true; 
-    }
-    else {
-      return false;
-    }
+  public int[] convertToGrid(int x, int y) {
+    return new int[]{x / 60, y / 60};
   }
   
   public int getMoney() {

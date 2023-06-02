@@ -3,6 +3,7 @@ public class Enemy {
   private float speed;
   private int xcoord;
   private int ycoord;
+  private String direction;
   //make a money variable
   //idk where money should be kept, but probably in game.
   //will make a money variable in enemy for now
@@ -32,6 +33,7 @@ public class Enemy {
     speed = speede;
     xcoord = x;
     ycoord = y;
+    direction = "right";
   }
   
   public boolean inRange(int[][] range) {
@@ -66,9 +68,24 @@ public class Enemy {
     return ycoord; 
   }
   
-  public void move(int xOffset, int yOffset) {
-    xcoord += xOffset;
-    ycoord += yOffset;
+  public void move() {
+    if (direction.equals("up")) {
+       ycoord--; 
+    }
+    else if (direction.equals("down")) {
+       ycoord++; 
+    }
+    else if (direction.equals("right")) {
+       xcoord++; 
+    }
+  }
+  
+  public void setDirection(String direc) {
+     direction = direc; 
+  }
+  
+  public String getDirection() {
+     return direction; 
   }
   
   public void displayEnemy() {
