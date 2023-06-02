@@ -20,6 +20,7 @@ void draw() {
     tick();
     text(frameCount, 10, 30);
     drawMoneyHealth();
+    waves.StartWaves();
   }
   else {
      background(255);
