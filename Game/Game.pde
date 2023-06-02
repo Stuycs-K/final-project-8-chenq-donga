@@ -87,7 +87,7 @@ void mouseClicked() {
   if (mouseButton == LEFT) {
     int[][] gameB = gameLevel.getBoard();
     if (!(gameB[mouseX/60][mouseY/60] == -1)) {
-      gameLevel.placeTower(mouseX, mouseY); 
+      gameLevel.placeTower(mouseX, mouseY, 250); 
       towerAmount++;
     }
   }

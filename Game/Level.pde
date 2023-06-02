@@ -103,7 +103,8 @@ public class Level {
   }
 
   // will be called from mouseCLicked function, x and y will the mouseX, mouseY
-  public void placeTower(int x, int y) {
+  public void placeTower(int x, int y, int towerCost) {
+    useMoney(towerCost);
     towers.add(new Tower(1, 1, 100, 10, x, y)); // will change stats later
   }
   
@@ -128,13 +129,13 @@ public class Level {
   public int[][] getBoard() {
     return gameBoard;
   }
-  
-  public int[] convertToGrid(int x, int y) {
-    return new int[]{x / 60, y / 60};
-  }
-  
+ 
   public int getMoney() {
     return money;
+  }
+  
+  public void useMoney(int moneyUsed) {
+    money = money - moneyUsed;
   }
   
   public int getHealth() {
