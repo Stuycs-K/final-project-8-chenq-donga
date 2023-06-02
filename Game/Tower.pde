@@ -7,7 +7,7 @@ public class Tower {
   private int ycoord;
   private int TowerLevel;
   
-  PImage BlueTower = loadImage("BlueTowerLevel1.png");
+  PImage BlueTower = loadImage("BlueTowerTestingTwo.png");
   PImage BlueTowerUp = loadImage("BlueTowerLevelTwo.png");
   //testing
   //image(goblinBomber, 50, 50);

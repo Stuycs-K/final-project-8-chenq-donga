@@ -42,7 +42,7 @@ public class Enemy {
        EnemySprite = loadImage("BossMonsterOne.png");
     }
     else {
-       EnemySprite = loadImage("RedEnemyBalloon1.png");
+       EnemySprite = loadImage("RedBalloonEnemyTesting.png");
     }
   }
   
@@ -70,6 +70,10 @@ public class Enemy {
   
   public float getspeed() {
     return speed;
+  }
+  
+  public float getHealth() {
+    return hp;
   }
     
   public int getX() {
@@ -101,6 +105,9 @@ public class Enemy {
   }
    
   public void displayEnemy() {
-    image(EnemySprite, xcoord, ycoord);  
+    image(EnemySprite, xcoord, ycoord);
+    textSize(15);
+    text("Health : ", getX() - 30, getY() + 45);
+    text(getHealth(), getX() + 15, getY() + 45);
   }
 }

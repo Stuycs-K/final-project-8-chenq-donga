@@ -16,8 +16,9 @@ void draw() {
     background(255);
     drawGrid();
     drawEntities();
+    textSize(25);
     tick();
-    text(frameCount, 10, 10);
+    text(frameCount, 10, 30);
     drawMoneyHealth();
   }
   else {
@@ -70,9 +71,9 @@ void drawGrid() {
 }
 
 void drawMoneyHealth() {
-   textSize(15);
-   text("Health: " + gameLevel.getHealth(),10, 30); 
-   text("Money: " + gameLevel.getMoney(),10, 60);
+   textSize(30);
+   text("Health: " + gameLevel.getHealth(),10, 60); 
+   text("Money: " + gameLevel.getMoney(),10, 90);
 }
 
 void drawEntities() {
@@ -110,6 +111,6 @@ void keyPressed() {
      gameLevel = new Level("Level 1");
   }
   else if (key == ' ') {
-     gameLevel.spawnEnemy(true, 1000000, 100);
+      gameLevel.spawnEnemy(true, 1000000, 100);
   }
 }

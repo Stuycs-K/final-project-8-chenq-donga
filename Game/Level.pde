@@ -20,7 +20,7 @@ public class Level {
     towers = new ArrayList<Tower>();
     enemies = new ArrayList<Enemy>();
     health = 20;
-    money = 500;
+    money = 250;
   }
   
   public Level(String name, int hp, int mulah) { // cheat constrctor for demo cases
@@ -96,7 +96,12 @@ public class Level {
       int currentX = enemy.getX();
       if (currentX >= end[0]*61) {
         enemies.remove(i);
-        health--;
+        if (enemy.getHealth() < 10000) {
+          health--;
+        }
+        else if (enemy.getHealth() > 10000) {
+          health -= 20;
+        }
         i--; // Decrement i to account for the removed enemy
       }
     }
@@ -104,8 +109,10 @@ public class Level {
 
   // will be called from mouseCLicked function, x and y will the mouseX, mouseY
   public void placeTower(int x, int y, int towerCost) {
-    useMoney(towerCost);
-    towers.add(new Tower(1, 100, 100, 10, x, y)); // will change stats later
+    if (money >= towerCost) {
+      useMoney(towerCost);
+      towers.add(new Tower(1, 100, 100, 10, x, y)); // will change stats later
+    }
   }
   
   // for special enemies
@@ -185,7 +192,13 @@ public class Level {
           Tower tower1 = towers.get(j);
           if (enemy.loseHealth(tower1.getDamage(), tower1.getRange())) {
             fill(255, 0, 0);
-            circle(enemy.getX(), enemy.getY(), 20);
+            //change sprite
+            PImage deadEnemy = loadImage("RedBalloonEnemyPopping.png");
+            if (enemy.getHealth() < 10000) {
+              image(deadEnemy, enemy.getX(), enemy.getY());
+              text("POP!", enemy.getX(), enemy.getY() - 15);
+            }
+            //circle(enemy.getX(), enemy.getY(), 20);
           }
        }
      }
@@ -193,11 +206,11 @@ public class Level {
   
   public void removeDeadEnemies() {
     for (int i = 0; i < enemies.size(); i++) {
-      Enemy enemy = enemies.get(i);
-      if (enemy.dropMoney() == 100) {
-        money += 100;
-        enemies.remove(i);
-        i--; // Decrement i to account for the removed enemy
+       Enemy enemy = enemies.get(i);
+       if (enemy.dropMoney() == 100) {
+         money += 100;
+         enemies.remove(i);
+         i--; // Decrement i to account for the removed enemy
       }
     }
   } 
