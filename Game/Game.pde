@@ -83,8 +83,11 @@ void drawEntities() {
 
 void mouseClicked() {
   if (mouseButton == LEFT) {
-    gameLevel.placeTower(mouseX, mouseY); 
-    towerAmount++;
+    int[][] gameB = gameLevel.getBoard();
+    if (!(gameB[mouseX/60][mouseY/60] == -1)) {
+      gameLevel.placeTower(mouseX, mouseY); 
+      towerAmount++;
+    }
   }
   else if (mouseButton == RIGHT) { //<>//
     gameLevel.spawnEnemyDebug(mouseX, mouseY);
@@ -94,5 +97,8 @@ void mouseClicked() {
 void keyPressed() {
   if (gameLevel.getHealth() <= 0 && key == ' ') {
      gameLevel = new Level("Level 1");
+  }
+  else if (key == ' ') {
+     gameLevel.spawnEnemy(true, 1000000, 100);
   }
 }

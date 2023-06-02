@@ -4,13 +4,14 @@ public class Enemy {
   private int xcoord;
   private int ycoord;
   private String direction;
+  PImage EnemySprite;
   //make a money variable
   //idk where money should be kept, but probably in game.
   //will make a money variable in enemy for now
   //public int money;
   
-  PImage EnemySprite = loadImage("RedEnemyBalloon1.png");
-  PImage BossMonsterSprite = loadImage("BossMonsterOne.png");
+  // PImage EnemySprite = loadImage("RedEnemyBalloon1.png");
+  // PImage BossMonsterSprite = loadImage("BossMonsterOne.png");
   
   //needs a money drop amount
   public int dropMoney(float death) {
@@ -31,12 +32,18 @@ public class Enemy {
     return 0;
   }
   
-  public Enemy(int hachepee, int speede, int x, int y) {
+  public Enemy(int hachepee, int speede, int x, int y, boolean isBoss) {
     hp = hachepee;
     speed = speede;
     xcoord = x;
     ycoord = y;
     direction = "right";
+    if (isBoss) {
+       EnemySprite = loadImage("BossMonsterOne.png");
+    }
+    else {
+       EnemySprite = loadImage("RedEnemyBalloon1.png");
+    }
   }
   
   public boolean inRange(int[][] range) {

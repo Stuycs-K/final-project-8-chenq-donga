@@ -113,16 +113,17 @@ public class Level {
     towers.add(new Tower(1, 1, 5, 10, x, y)); // will change stats later
   }
   
-  // will spawn enemy on start, has cooldown time
-  public void spawnEnemy() {
+  // for special enemies
+  public void spawnEnemy(boolean isBoss, int hp, int speed) {
     int spawnX = start[0]*60 + 30;
     int spawnY = start[1]*60 + 30;
-    enemies.add(new Enemy(10, 10, spawnX, spawnY)); //placeholder values
+    enemies.add(new Enemy(hp, speed, spawnX, spawnY, isBoss)); //placeholder values
   }
+  
   
   // debug, used to test tower attacks
   public void spawnEnemyDebug(int x, int y) {
-    enemies.add(new Enemy(10, 10, x, y)); //placeholder values
+    enemies.add(new Enemy(10, 10, x, y, false)); //placeholder values
   }
   
   
@@ -157,7 +158,7 @@ public class Level {
   public void addWaypoint(int[] cord) {
     gameMap.addWaypoint(cord);
   }
-  
+
   public void setPath() {
      gameBoard[start[0]][start[1]] = -1;
      int currentX = start[0];
