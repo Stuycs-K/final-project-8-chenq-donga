@@ -1,6 +1,7 @@
 Level gameLevel;
 int towerAmount;
 int prevTowerAmount;
+int frameLastAttacked = 0;
 
 void setup() {
   size(1080, 900);
@@ -31,8 +32,16 @@ void draw() {
 }
 
 void tick() {
+  float cooldown = 0;
+  ArrayList<Tower> towers = gameLevel.getTowers();
+  if (towers.size() > 0) {
+     cooldown = towers.get(0).returncdt();
+  }
   gameLevel.enemyMove();
-  gameLevel.attack();
+  if (frameCount - frameLastAttacked >= cooldown) {
+    gameLevel.attack();
+    frameLastAttacked = frameCount;
+  }
   gameLevel.removeDeadEnemies();
 }
 

@@ -105,7 +105,7 @@ public class Level {
   // will be called from mouseCLicked function, x and y will the mouseX, mouseY
   public void placeTower(int x, int y, int towerCost) {
     useMoney(towerCost);
-    towers.add(new Tower(1, 1, 100, 10, x, y)); // will change stats later
+    towers.add(new Tower(1, 100, 100, 10, x, y)); // will change stats later
   }
   
   // for special enemies

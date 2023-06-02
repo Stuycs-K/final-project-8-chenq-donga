@@ -54,7 +54,6 @@ public class Enemy {
   }
   
   public boolean loseHealth(float damage, int[][] range) {
-    print("Health: " + hp);
     if (inRange(range)) {
       hp = hp - damage;
       return true;
