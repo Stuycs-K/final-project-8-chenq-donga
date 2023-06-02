@@ -125,7 +125,7 @@ public class Level {
   
   // debug, used to test tower attacks
   public void spawnEnemyDebug(int x, int y) {
-    enemies.add(new Enemy(1, 10, x, y, false)); //placeholder values
+    enemies.add(new Enemy(2, 10, x, y, false)); //placeholder values
   }
   
   
