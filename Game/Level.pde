@@ -96,7 +96,6 @@ public class Level {
     for (int i = 0; i < enemies.size(); i++) {
       Enemy enemy = enemies.get(i);
       int currentX = enemy.getX();
-      int currentY = enemy.getY();
       if (currentX >= end[0]*61) {
         print(end[0]*50);
         print(currentX);
@@ -107,7 +106,6 @@ public class Level {
     }
   }
 
-  
   // will be called from mouseCLicked function, x and y will the mouseX, mouseY
   public void placeTower(int x, int y) {
     towers.add(new Tower(1, 1, 5, 10, x, y)); // will change stats later
@@ -181,5 +179,18 @@ public class Level {
         currentY = nextLocation[1];
        }
     }
+  }
+  
+  public void attack() {
+     for (int i = 0; i < enemies.size(); i++) {
+       Enemy enemy = enemies.get(i);
+       for (int j = 0; j < towers.size(); j++) {
+          Tower tower1 = towers.get(j);
+          if (enemy.losehealth(tower1.getDamage(), tower1.getRange())) {
+            fill(255, 0, 0);
+            circle(enemy.getX(), enemy.getY(), 20);
+          }
+       }
+     }
   }
 }

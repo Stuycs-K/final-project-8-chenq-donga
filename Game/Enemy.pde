@@ -53,10 +53,12 @@ public class Enemy {
     return false;
   }
   
-  public void loseHealth(float damage, int[][] range) {
+  public boolean loseHealth(float damage, int[][] range) {
     if (inRange(range)) {
       hp -= damage;
+      return true;
     }
+    return false;
   }
   
   public boolean isDead() {
