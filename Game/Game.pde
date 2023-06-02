@@ -1,6 +1,7 @@
 Level gameLevel;
 int towerAmount;
 int prevTowerAmount;
+int frameLastAttacked = 0;
 
 void setup() {
   size(1080, 900);
@@ -11,16 +12,37 @@ void setup() {
 }
 
 void draw() {
-  background(255);
-  drawGrid();
-  drawEntities();
-  tick();
-  text(frameCount, 10, 10);
-  drawMoneyHealth();
+  if (gameLevel.getHealth() >= 1) {
+    background(255);
+    drawGrid();
+    drawEntities();
+    tick();
+    text(frameCount, 10, 10);
+    drawMoneyHealth();
+  }
+  else {
+     background(255);
+     fill(255, 0, 0); 
+     textSize(100);
+     text("GAME OVER", 270, 450);
+     fill(0);
+     textSize(50);
+     text("Press spacebar to restart", 270, 550);
+  }
 }
 
 void tick() {
+  float cooldown = 0;
+  ArrayList<Tower> towers = gameLevel.getTowers();
+  if (towers.size() > 0) {
+     cooldown = towers.get(0).returncdt();
+  }
   gameLevel.enemyMove();
+  if (frameCount - frameLastAttacked >= cooldown) {
+    gameLevel.attack();
+    frameLastAttacked = frameCount;
+  }
+  gameLevel.removeDeadEnemies();
 }
 
 void drawGrid() {
@@ -48,8 +70,9 @@ void drawGrid() {
 }
 
 void drawMoneyHealth() {
+   textSize(15);
    text("Health: " + gameLevel.getHealth(),10, 30); 
-   text("Health: " + gameLevel.getMoney(),10, 60);
+   text("Money: " + gameLevel.getMoney(),10, 60);
 }
 
 void drawEntities() {
@@ -62,7 +85,7 @@ void drawEntities() {
     }
     prevTowerAmount++;
   // }
-  ArrayList<Enemy> enemies = gameLevel.getEnemies();
+  ArrayList<Enemy> enemies = gameLevel.getEnemies(); //<>//
   for (int i = 0; i < enemies.size(); i++) {
     Enemy enemy1 = enemies.get(i);
     enemy1.displayEnemy();
@@ -71,10 +94,22 @@ void drawEntities() {
 
 void mouseClicked() {
   if (mouseButton == LEFT) {
-    gameLevel.placeTower(mouseX, mouseY); 
-    towerAmount++;
+    int[][] gameB = gameLevel.getBoard();
+    if (!(gameB[mouseX/60][mouseY/60] == -1)) {
+      gameLevel.placeTower(mouseX, mouseY, 250); 
+      towerAmount++;
+    }
   }
   else if (mouseButton == RIGHT) { //<>//
     gameLevel.spawnEnemyDebug(mouseX, mouseY);
+  }
+}
+
+void keyPressed() {
+  if (gameLevel.getHealth() <= 0 && key == ' ') {
+     gameLevel = new Level("Level 1");
+  }
+  else if (key == ' ') {
+     gameLevel.spawnEnemy(true, 1000000, 100);
   }
 }

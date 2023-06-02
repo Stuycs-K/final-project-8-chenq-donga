@@ -4,18 +4,19 @@ public class Enemy {
   private int xcoord;
   private int ycoord;
   private String direction;
+  PImage EnemySprite;
   //make a money variable
   //idk where money should be kept, but probably in game.
   //will make a money variable in enemy for now
   //public int money;
   
-  PImage EnemySprite = loadImage("RedEnemyBalloon1.png");
-  PImage BossMonsterSprite = loadImage("BossMonsterOne.png");
+  // PImage EnemySprite = loadImage("RedEnemyBalloon1.png");
+  // PImage BossMonsterSprite = loadImage("BossMonsterOne.png");
   
   //needs a money drop amount
-  public int dropMoney(float death) {
+  public int dropMoney() {
     if (isDead()) {
-      return 1;
+      return 100;
       //drop a certain amount of money based on the type of enemy
       //will probably have inherited enemies. 
       //we can make this money scaled to the enemy's health, or just a set amount everytime.
@@ -31,12 +32,18 @@ public class Enemy {
     return 0;
   }
   
-  public Enemy(int hachepee, int speede, int x, int y) {
+  public Enemy(int hachepee, int speede, int x, int y, boolean isBoss) {
     hp = hachepee;
     speed = speede;
     xcoord = x;
     ycoord = y;
     direction = "right";
+    if (isBoss) {
+       EnemySprite = loadImage("BossMonsterOne.png");
+    }
+    else {
+       EnemySprite = loadImage("RedEnemyBalloon1.png");
+    }
   }
   
   public boolean inRange(int[][] range) {
@@ -46,14 +53,16 @@ public class Enemy {
     return false;
   }
   
-  public void loseHealth(float damage, int[][] range) {
+  public boolean loseHealth(float damage, int[][] range) {
     if (inRange(range)) {
-      hp -= damage;
+      hp = hp - damage;
+      return true;
     }
+    return false;
   }
   
   public boolean isDead() {
-    if (hp <= 0) { 
+    if (!(hp > 0)) { 
       return true;
     }
     return false;

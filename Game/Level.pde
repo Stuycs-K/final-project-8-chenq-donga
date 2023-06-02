@@ -43,45 +43,43 @@ public class Level {
   
   // Should run every frames(60 frames per second)
   public void enemyMove() {
-  for (int i = 0; i < enemies.size(); i++) {
-    Enemy enemy = enemies.get(i);
-    int currentX = enemy.getX();
-    int currentY = enemy.getY();
-    String currentDirection = enemy.getDirection();
-    
-    int nextX = currentX;
-    int nextY = currentY;
-    
-    if (currentDirection.equals("right")) {
-      nextX = currentX + 1;
-    } else if (currentDirection.equals("down")) {
-      nextY = currentY + 1;
-    } else if (currentDirection.equals("up")) {
-      nextY = currentY - 1;
-    }
-    
-    if (gameBoard[nextX / 60][nextY / 60] == -1) {
-      enemy.move();
-    } else {
-      String newDirection = getNewDirection(gameBoard, currentX, currentY);
-      enemy.setDirection(newDirection);
-      enemy.move();
+    enemyAtEnd();
+    for (int i = 0; i < enemies.size(); i++) {
+      Enemy enemy = enemies.get(i);
+      int currentX = enemy.getX();
+      int currentY = enemy.getY();
+      String currentDirection = enemy.getDirection();
+      int nextX = currentX;
+      int nextY = currentY;
+      if (currentDirection.equals("right")) {
+        nextX = currentX + 1;
+      } else if (currentDirection.equals("down")) {
+        nextY = currentY + 1;
+      } else if (currentDirection.equals("up")) {
+        nextY = currentY - 1;
+      }
+      if (gameBoard[nextX / 60][nextY / 60] == -1) {
+        enemy.move();
+      } else {
+        String newDirection = getNewDirection(gameBoard, currentX, currentY);
+        enemy.setDirection(newDirection);
+        enemy.move();
+      }
     }
   }
-}
 
   private String getNewDirection(int[][] gameBoard, int currentX, int currentY) {
-    if (gameBoard[(currentX + 30) / 60][currentY / 60] == -1) {
+    int distance = 30; // Desired distance from the edge
+    if (gameBoard[(currentX + distance) / 60][currentY / 60] == -1) {
       return "right";
-    } else if (gameBoard[currentX / 60][(currentY + 30) / 60] == -1) {
+    } else if (gameBoard[currentX / 60][(currentY + distance) / 60] == -1) {
       return "down";
-    } else if (gameBoard[currentX / 60][(currentY - 30) / 60] == -1) {
+    } else if (gameBoard[currentX / 60][(currentY - distance) / 60] == -1) {
       return "up";
     }
     // If no valid direction is found, default to right
     return "right";
-  }
-
+  }  
 
   public boolean enemyMoveHelper(int futureX, int futureY) {
       int gridX = futureX / 60;
@@ -92,21 +90,35 @@ public class Level {
       return false;
   }
   
+  public void enemyAtEnd() {
+    for (int i = 0; i < enemies.size(); i++) {
+      Enemy enemy = enemies.get(i);
+      int currentX = enemy.getX();
+      if (currentX >= end[0]*61) {
+        enemies.remove(i);
+        health--;
+        i--; // Decrement i to account for the removed enemy
+      }
+    }
+  }
+
   // will be called from mouseCLicked function, x and y will the mouseX, mouseY
-  public void placeTower(int x, int y) {
-    towers.add(new Tower(1, 1, 5, 10, x, y)); // will change stats later
+  public void placeTower(int x, int y, int towerCost) {
+    useMoney(towerCost);
+    towers.add(new Tower(1, 100, 100, 10, x, y)); // will change stats later
   }
   
-  // will spawn enemy on start, has cooldown time
-  public void spawnEnemy() {
+  // for special enemies
+  public void spawnEnemy(boolean isBoss, int hp, int speed) {
     int spawnX = start[0]*60 + 30;
     int spawnY = start[1]*60 + 30;
-    enemies.add(new Enemy(10, 10, spawnX, spawnY)); //placeholder values
+    enemies.add(new Enemy(hp, speed, spawnX, spawnY, isBoss)); //placeholder values
   }
+  
   
   // debug, used to test tower attacks
   public void spawnEnemyDebug(int x, int y) {
-    enemies.add(new Enemy(10, 10, x, y)); //placeholder values
+    enemies.add(new Enemy(1, 10, x, y, false)); //placeholder values
   }
   
   
@@ -117,13 +129,13 @@ public class Level {
   public int[][] getBoard() {
     return gameBoard;
   }
-  
-  public int[] convertToGrid(int x, int y) {
-    return new int[]{x / 60, y / 60};
-  }
-  
+ 
   public int getMoney() {
     return money;
+  }
+  
+  public void useMoney(int moneyUsed) {
+    money = money - moneyUsed;
   }
   
   public int getHealth() {
@@ -141,7 +153,7 @@ public class Level {
   public void addWaypoint(int[] cord) {
     gameMap.addWaypoint(cord);
   }
-  
+
   public void setPath() {
      gameBoard[start[0]][start[1]] = -1;
      int currentX = start[0];
@@ -165,4 +177,28 @@ public class Level {
        }
     }
   }
+  
+  public void attack() {
+     for (int i = 0; i < enemies.size(); i++) {
+       Enemy enemy = enemies.get(i);
+       for (int j = 0; j < towers.size(); j++) {
+          Tower tower1 = towers.get(j);
+          if (enemy.loseHealth(tower1.getDamage(), tower1.getRange())) {
+            fill(255, 0, 0);
+            circle(enemy.getX(), enemy.getY(), 20);
+          }
+       }
+     }
+  }
+  
+  public void removeDeadEnemies() {
+    for (int i = 0; i < enemies.size(); i++) {
+      Enemy enemy = enemies.get(i);
+      if (enemy.dropMoney() == 100) {
+        money += 100;
+        enemies.remove(i);
+        i--; // Decrement i to account for the removed enemy
+      }
+    }
+  } 
 }

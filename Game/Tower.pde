@@ -1,6 +1,6 @@
 public class Tower {
   private float damage;
-  private float cooldownTime;
+  private float cooldownTime; // measured in frames
   private int range;
   private int attacksbtwabilities;
   private int xcoord;
