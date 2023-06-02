@@ -32,6 +32,7 @@ void draw() {
 
 void tick() {
   gameLevel.enemyMove();
+  gameLevel.attack();
 }
 
 void drawGrid() {

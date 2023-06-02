@@ -108,7 +108,7 @@ public class Level {
 
   // will be called from mouseCLicked function, x and y will the mouseX, mouseY
   public void placeTower(int x, int y) {
-    towers.add(new Tower(1, 1, 5, 10, x, y)); // will change stats later
+    towers.add(new Tower(1, 1, 100, 10, x, y)); // will change stats later
   }
   
   // for special enemies
@@ -121,7 +121,7 @@ public class Level {
   
   // debug, used to test tower attacks
   public void spawnEnemyDebug(int x, int y) {
-    enemies.add(new Enemy(10, 10, x, y, false)); //placeholder values
+    enemies.add(new Enemy(1, 10, x, y, false)); //placeholder values
   }
   
   
@@ -186,11 +186,12 @@ public class Level {
        Enemy enemy = enemies.get(i);
        for (int j = 0; j < towers.size(); j++) {
           Tower tower1 = towers.get(j);
-          if (enemy.losehealth(tower1.getDamage(), tower1.getRange())) {
+          if (enemy.loseHealth(tower1.getDamage(), tower1.getRange())) {
             fill(255, 0, 0);
             circle(enemy.getX(), enemy.getY(), 20);
           }
        }
      }
   }
+  
 }
