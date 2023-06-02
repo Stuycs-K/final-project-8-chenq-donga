@@ -1,0 +1,160 @@
+public class Level {
+  private int[][] gameBoard;
+  private Map gameMap;
+  private int health; // drops when enemies cross the end
+  private int money; // amount of money that the player has
+  private ArrayList<Tower> towers;
+  private ArrayList<Enemy> enemies;
+  private int[] start;
+  private int[] end; 
+  
+  private final int path = -1;
+  
+  /* Constructors */
+  public Level(String name) { // normal constructor used in normal games
+    gameBoard = new int[width/60][height/60];
+    start = new int[]{0, 4};
+    end = new int[]{gameBoard.length - 1, 4};
+    gameMap = new Map(name, start, end);
+    waypoints();
+    setPath();
+    towers = new ArrayList<Tower>();
+    enemies = new ArrayList<Enemy>();
+    health = 20;
+    money = 500;
+  }
+  
+  public Level(String name, int hp, int mulah) { // cheat constrctor for demo cases
+    gameBoard = new int[width/60][height/60];
+    gameMap = new Map(name, new int[]{0, 4}, new int[]{gameBoard.length - 1, 4});
+    towers = new ArrayList<Tower>();
+    enemies = new ArrayList<Enemy>();
+    health = hp;
+    money = mulah;
+  }
+  
+  /* Waypoints - start and end are fixed, will change later */
+  public void waypoints() {
+    addWaypoint(new int[]{3, 4});
+    addWaypoint(new int[]{3, 10});
+    addWaypoint(new int[]{11, 10});
+    addWaypoint(new int[]{11, 4});
+  }
+  
+  /* movement - each enemy will move 1 pixel, should move a square on the grid per second */
+  public void enemyMove() {
+  for (int i = 0; i < enemies.size(); i++) {
+    Enemy enemy = enemies.get(i);
+    int currentX = enemy.getX();
+    int currentY = enemy.getY();
+    String currentDirection = enemy.getDirection();
+    
+    int nextX = currentX;
+    int nextY = currentY;
+    
+    if (currentDirection.equals("right")) {
+      nextX = currentX + 1;
+    } else if (currentDirection.equals("down")) {
+      nextY = currentY + 1;
+    } else if (currentDirection.equals("up")) {
+      nextY = currentY - 1;
+    }
+    
+    if (gameBoard[nextX / 60][nextY / 60] == -1) {
+      enemy.move();
+    } else {
+      String newDirection = getNewDirection(gameBoard, currentX, currentY);
+      enemy.setDirection(newDirection);
+      enemy.move();
+    }
+  }
+}
+
+  private String getNewDirection(int[][] gameBoard, int currentX, int currentY) {
+    if (gameBoard[(currentX + 30) / 60][currentY / 60] == -1) {
+      return "right";
+    } else if (gameBoard[currentX / 60][(currentY + 30) / 60] == -1) {
+      return "down";
+    } else if (gameBoard[currentX / 60][(currentY - 30) / 60] == -1) {
+      return "up";
+    }
+    // If no valid direction is found, default to right
+    return "right";
+  }
+  
+  
+  /* Tower Placement - this will be called from game*/
+  public void placeTower(int x, int y) {
+    towers.add(new Tower(1, 1, 5, 10, x, y)); // will change stats later
+  }
+  
+  /* Enemy Spawning */
+  // will spawn enemy on start, has cooldown time
+  public void spawnEnemy() {
+    int spawnX = start[0]*60 + 30;
+    int spawnY = start[1]*60 + 30;
+    enemies.add(new Enemy(10, 10, spawnX, spawnY)); //placeholder values
+  }
+  
+  // debug, used to test tower attacks
+  public void spawnEnemyDebug(int x, int y) {
+    enemies.add(new Enemy(10, 10, x, y)); //placeholder values
+  }
+  
+  /* lose heath, triggers when enemy reaches middle of end square */
+  public void loseHP() { // Eventually different enemies will cause different amount of health loss
+    health--; 
+  }
+  
+  public int enemiesAtEnd()
+  
+  /* Getters */
+  public int[][] getBoard() {
+    return gameBoard;
+  }
+  
+  public int getMoney() {
+    return money;
+  }
+  
+  public int getHealth() {
+    return health; 
+  }
+  
+  public ArrayList<Tower> getTowers() {
+    return towers; 
+  }
+  
+  public ArrayList<Enemy> getEnemies() {
+    return enemies; 
+  }
+  
+  /* Pathfinding and waypoing adding */
+  public void addWaypoint(int[] cord) {
+    gameMap.addWaypoint(cord);
+  }
+  
+  public void setPath() {
+     gameBoard[start[0]][start[1]] = -1;
+     int currentX = start[0];
+     int currentY = start[1];
+     int[] nextLocation = null;
+     while (gameMap.getSize() >= 1) {
+        nextLocation = gameMap.nextLocation();
+        gameBoard[nextLocation[0]][nextLocation[1]] = -1;
+        for (int i = currentX; i < nextLocation[0]; i++) {
+          if (currentY < nextLocation[1]) {
+            for (int j = currentY; j <= nextLocation[1]; j++) {
+              gameBoard[i][j] = path;
+            }
+          } else {
+            for (int j = currentY; j >= nextLocation[1]; j--) {
+              gameBoard[i][j] = path;
+            }
+          }
+        currentX = nextLocation[0];
+        currentY = nextLocation[1];
+       }
+    }
+  }
+}

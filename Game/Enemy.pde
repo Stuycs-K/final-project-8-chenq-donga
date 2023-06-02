@@ -9,6 +9,9 @@ public class Enemy {
   //will make a money variable in enemy for now
   //public int money;
   
+  PImage EnemySprite = loadImage("RedEnemyBalloon1.png");
+  PImage BossMonsterSprite = loadImage("BossMonsterOne.png");
+  
   //needs a money drop amount
   public int dropMoney(float death) {
     if (isDead()) {
@@ -87,13 +90,8 @@ public class Enemy {
   public String getDirection() {
      return direction; 
   }
-  
+   
   public void displayEnemy() {
-    //placeholder image
-    
-    //will add sprite later, this is just a circle for now
-    
-    //image(enemySprite, xcoord, ycoord);  
-    circle(xcoord, ycoord, 15);
+    image(EnemySprite, xcoord, ycoord);  
   }
 }
