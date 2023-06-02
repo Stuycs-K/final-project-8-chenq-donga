@@ -79,7 +79,7 @@ public class Level {
     }
     // If no valid direction is found, default to right
     return "right";
-}
+  }  
 
 
 
@@ -97,7 +97,7 @@ public class Level {
       Enemy enemy = enemies.get(i);
       int currentX = enemy.getX();
       int currentY = enemy.getY();
-      if (currentX >= end[0]*61 && currentY >= end[1]*61) {
+      if (currentX >= end[0]*61) {
         print(end[0]*50);
         print(currentX);
         enemies.remove(i);

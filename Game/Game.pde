@@ -11,12 +11,23 @@ void setup() {
 }
 
 void draw() {
-  background(255);
-  drawGrid();
-  drawEntities();
-  tick();
-  text(frameCount, 10, 10);
-  drawMoneyHealth();
+  if (gameLevel.getHealth() >= 1) {
+    background(255);
+    drawGrid();
+    drawEntities();
+    tick();
+    text(frameCount, 10, 10);
+    drawMoneyHealth();
+  }
+  else {
+     background(255);
+     fill(255, 0, 0); 
+     textSize(100);
+     text("GAME OVER", 270, 450);
+     fill(0);
+     textSize(50);
+     text("Press spacebar to restart", 270, 550);
+  }
 }
 
 void tick() {
@@ -48,8 +59,9 @@ void drawGrid() {
 }
 
 void drawMoneyHealth() {
+   textSize(15);
    text("Health: " + gameLevel.getHealth(),10, 30); 
-   text("Health: " + gameLevel.getMoney(),10, 60);
+   text("Money: " + gameLevel.getMoney(),10, 60);
 }
 
 void drawEntities() {
@@ -62,7 +74,7 @@ void drawEntities() {
     }
     prevTowerAmount++;
   // }
-  ArrayList<Enemy> enemies = gameLevel.getEnemies();
+  ArrayList<Enemy> enemies = gameLevel.getEnemies(); //<>//
   for (int i = 0; i < enemies.size(); i++) {
     Enemy enemy1 = enemies.get(i);
     enemy1.displayEnemy();
@@ -76,5 +88,11 @@ void mouseClicked() {
   }
   else if (mouseButton == RIGHT) { //<>//
     gameLevel.spawnEnemyDebug(mouseX, mouseY);
+  }
+}
+
+void keyPressed() {
+  if (gameLevel.getHealth() <= 0 && key == ' ') {
+     gameLevel = new Level("Level 1");
   }
 }
