@@ -40,21 +40,21 @@ public class Level {
   
   // what updates the enemies positions; game will handle the drawing
   
-  // Should run every 15 frames(60 frames per second)
+  // Should run every frames(60 frames per second)
   public void enemyMove() {
     for (int i = 0; i < enemies.size(); i++) {
       Enemy enemy = enemies.get(i);
       int currentX = enemy.getX();
       int currentY = enemy.getY();
-      if (enemyMoveHelper(currentX + 16, currentY)) {
-         enemy.move(currentX + 16, currentY);
+      if (enemyMoveHelper(currentX + 1, currentY)) {
+         enemy.move(currentX + 1, currentY);
       }
       else {
-         if (enemyMoveHelper(currentX, currentY+30)) {
-            enemy.move(currentX, currentY + 16);
+         if (enemyMoveHelper(currentX, currentY+1)) {
+            enemy.move(currentX, currentY + 1);
          }
-         else if (enemyMoveHelper(currentX, currentY-30)) {
-            enemy.move(currentX, currentY - 16);
+         else if (enemyMoveHelper(currentX, currentY-1)) {
+            enemy.move(currentX, currentY - 1);
          }
       }
     }
@@ -63,7 +63,7 @@ public class Level {
   public boolean enemyMoveHelper(int futureX, int futureY) {
       int gridX = futureX / 60;
       int gridY = futureY / 60;
-      if (gameBoard[gridX][gridY] == -1) {
+      if ((gridX < gameBoard.length && gridY < gameBoard[0].length) && gameBoard[gridX][gridY] == -1) {
         return true;
       }
       return false;
