@@ -122,6 +122,21 @@ public class Level {
     enemies.add(new Enemy(hp, speed, spawnX, spawnY, isBoss)); //placeholder values
   }
   
+  // this method will be called for a normal wave in the game
+  // int[] stats = HP, Speed, Delay, Amount of Enemies
+  public void spawnWave(int[] stats) {
+    int delay = stats[2];
+    int amount = stats[3];
+    int spawnX = start[0]*60 + 30;
+    int spawnY = start[1]*60 + 30;
+    int frameSpawned = frameCount;
+    while (amount >= 1) {
+      if (frameCount - frameSpawned >= delay) {
+        frameSpawned = frameCount;
+        enemies.add(new Enemy(stats[0], stats[1], spawnX, spawnY, isBoss);
+      }     
+    }
+  }
   
   // debug, used to test tower attacks
   public void spawnEnemyDebug(int x, int y) {
