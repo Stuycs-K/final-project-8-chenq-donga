@@ -2,6 +2,7 @@ Level gameLevel;
 int towerAmount;
 int prevTowerAmount;
 int frameLastAttacked = 0;
+int frameLastSpawned = 0;
 int currentWave;
 
 void setup() {
@@ -38,11 +39,15 @@ void spawnEnemyInWave() {
 }
 
 void tick() {
-  float spawnCooldown = 0;
+  int[] stats = gameLevel.getWaves().getNextEnemyInWave();
+  int spawnCD = stats[2];
   float attackCooldown = 0;
   ArrayList<Tower> towers = gameLevel.getTowers();
   if (towers.size() > 0) {
      attackCooldown = towers.get(0).returncdt();
+  }
+  if (frameCount - frameLastSpawned >= spawnCD) {
+    gameLevel.spawnEnemy(false, stats[0], stats[1]);
   }
   gameLevel.enemyMove();
   if (frameCount - frameLastAttacked >= attackCooldown) {

@@ -22,9 +22,10 @@ public class Waves {
    
    public void generateEnemies() {
       while (currentAmount < maxSize) {
+         int delay = 20 + (int)(Math.random() * 30);
          int speed = (int)(Math.random() * 3);
          int hp = (int)(Math.random() * 2);
-         enemies.add(new int[]{hp, speed});
+         enemies.add(new int[]{hp, speed, delay});
          currentAmount++;
       }  
    }
