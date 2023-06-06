@@ -24,7 +24,7 @@ public class Waves {
       while (currentAmount < maxSize) {
          int delay = 20 + (int)(Math.random() * 30);
          int speed = (int)(Math.random() * 3);
-         int hp = (int)(Math.random() * 2);
+         int hp = 1 + (int)(Math.random() * 3);
          enemies.add(new int[]{hp, speed, delay});
          currentAmount++;
       }  

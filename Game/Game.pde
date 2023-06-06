@@ -58,7 +58,7 @@ void tick() {
       gameLevel.spawnEnemy(false, stats[0], stats[1]);
     }
     if (detectWaveEnd(stats)) {
-       
+      gameLevel.nextWave(); 
     }
   }
   gameLevel.enemyMove();
