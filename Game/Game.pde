@@ -21,7 +21,7 @@ void draw() {
     text(frameCount, 10, 30);
     drawMoneyHealth();
   }
-  else {
+  else if (gameLevel.getHealth() <= 0) {
      background(255);
      fill(255, 0, 0); 
      textSize(100);
@@ -30,6 +30,10 @@ void draw() {
      textSize(50);
      text("Press spacebar to restart", 270, 550);
   }
+}
+
+void spawnEnemyInWave() {
+    
 }
 
 void tick() {

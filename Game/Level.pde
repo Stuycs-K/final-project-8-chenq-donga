@@ -1,4 +1,5 @@
 public class Level {
+  private Waves enemyWaves;
   private int[][] gameBoard;
   private Map gameMap;
   private int health; // drops when enemies cross the end
@@ -11,6 +12,7 @@ public class Level {
   private final int path = -1;
   
   public Level(String name) { // normal constructor used in normal games
+    enemyWaves = new Waves(20):
     gameBoard = new int[width/60][height/60];
     start = new int[]{0, 4};
     end = new int[]{gameBoard.length - 1, 4};
@@ -136,6 +138,14 @@ public class Level {
         enemies.add(new Enemy(stats[0], stats[1], spawnX, spawnY, isBoss);
       }     
     }
+  }
+  
+  // MUST BE RUN AFTER ENEMY SPAWN, WILL TRIGGER A FAlSE WIN OTHERWISE
+  public boolean isWon() {
+    if (enemyWaves.getWaveNumber() == enemyWaves.getMaxWaves()) {
+       return true; 
+    }
+    return false;
   }
   
   // debug, used to test tower attacks

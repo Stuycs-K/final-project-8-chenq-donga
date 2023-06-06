@@ -1,33 +1,26 @@
+import java.util.ArrayDeque;
+
 public class Waves {
-   private int currentWave;
-   private int waveCount;
-   private ArrayList<int[]> enemyStats;
+   private int currentAmount;
+   private int maxSize;
+   private ArrayDeque<Enemies> enemies;
    
-   public Waves(int count) {
-      waveCount = count;    
-      currentWave = 0;
-      enemyStats = new ArrayList<int[]>();
+   public Waves(int enemyCount) {
+      currentAmount = 0;
+      maxSize = enemyCount;
+      enemyStats = new ArrayDeque<Enemies>();
       generateEnemies();
    }
    
-   public int[] getWave() {
-      int prevWave = currentWave;
-      currentWave++;
-      return enemyStats.get(prevWave);
+   public Enemy getNextEnemyInWave() {
+      if (currentAMount > 0) {
+        return enemies.poll(); // gets first thing in ArrayDeque 
+      }
    }
    
-   // Currently random generation, will add more
-   public void generateEnemiesWave() {
-     for (int i = 0; i < enemyStats.size(); i++) {
-        int enemyAmount = 5 + (int)(Math.random() * (currentWave + (waveCount / 2)));
-        int speed = (int)(Math.random() * 3);
-        int hp = (int)(Math.random() * 2);
-        int delay = 20 + (int)(Math.random() * 30); // based on frame count
-        enemyStats.set(i, new int[]{hp, speed, delay, enemyAmount});
-     }
-   }
-  
-   public int getWaveNumber() {
-     return currentWave + 1;
+   public void generateEnemies() {
+      while (currentAmount < maxSize) {
+          
+      }  
    }
 }
