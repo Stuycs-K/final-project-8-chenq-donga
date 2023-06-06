@@ -128,9 +128,7 @@ public class Level {
   }
   
   public void nextWave() {
-    if (enemyWaves.waveFinished()) {
-       enemyWaves = new Waves(20 + (int)(Math.random() * (currentWave / 2)));
-    }
+    enemyWaves = new Waves(20 + (int)(Math.random() * (currentWave / 2)));
   }
   
   /* THIS PART IS ALL GETTER METHODS
@@ -232,7 +230,7 @@ public class Level {
           health--;
         }
         else if (enemy.getHealth() > 10000) {
-          health -= 20;
+          health = 0;
         }
         i--; // Decrement i to account for the removed enemy
       }

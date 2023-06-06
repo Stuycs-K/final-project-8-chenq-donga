@@ -34,8 +34,13 @@ void draw() {
   }
 }
 
-void detectWaveEnd(int[] stats) {
-   if (stats[0] == -1 && gameLevel.ge) 
+
+boolean detectWaveEnd(int[] stats) {
+   return (stats[0] == -1 && gameLevel.getEnemies().size() == 0);
+}
+
+boolean isEnemyInBuffer(int[] stats) {
+  return (!(stats[0] == -1));
 }
 
 void tick() {
@@ -47,10 +52,14 @@ void tick() {
   }
   if (frameCount - frameLastSpawned >= spawnCD) {
     int[] stats = gameLevel.getWaves().getNextEnemyInWave();
-    detectWaveEnd(stats);
-    frameLastSpawned = frameCount;
-    spawnCD = stats[2];
-    gameLevel.spawnEnemy(false, stats[0], stats[1]);
+    if (isEnemyInBuffer(stats)) {
+      frameLastSpawned = frameCount;
+      spawnCD = stats[2];
+      gameLevel.spawnEnemy(false, stats[0], stats[1]);
+    }
+    if (detectWaveEnd(stats)) {
+       
+    }
   }
   gameLevel.enemyMove();
   if (frameCount - frameLastAttacked >= attackCooldown) {
