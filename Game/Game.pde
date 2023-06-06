@@ -2,6 +2,7 @@ Level gameLevel;
 int towerAmount;
 int prevTowerAmount;
 int frameLastAttacked = 0;
+int currentWave;
 
 void setup() {
   size(1080, 900);
@@ -19,7 +20,7 @@ void draw() {
     textSize(25);
     tick();
     text(frameCount, 10, 30);
-    drawMoneyHealth();
+    drawMoneyHealthWave();
   }
   else if (gameLevel.getHealth() <= 0) {
      background(255);
@@ -33,17 +34,18 @@ void draw() {
 }
 
 void spawnEnemyInWave() {
-    
+   
 }
 
 void tick() {
-  float cooldown = 0;
+  float spawnCooldown = 0;
+  float attackCooldown = 0;
   ArrayList<Tower> towers = gameLevel.getTowers();
   if (towers.size() > 0) {
-     cooldown = towers.get(0).returncdt();
+     attackCooldown = towers.get(0).returncdt();
   }
   gameLevel.enemyMove();
-  if (frameCount - frameLastAttacked >= cooldown) {
+  if (frameCount - frameLastAttacked >= attackCooldown) {
     gameLevel.attack();
     frameLastAttacked = frameCount;
   }
@@ -74,10 +76,11 @@ void drawGrid() {
   }
 }
 
-void drawMoneyHealth() {
+void drawMoneyHealthWave() {
    textSize(30);
    text("Health: " + gameLevel.getHealth(),10, 60); 
    text("Money: " + gameLevel.getMoney(),10, 90);
+   text("Current Wave: " + gameLevel.getCurrentWave(), 10, 120);
 }
 
 void drawEntities() {

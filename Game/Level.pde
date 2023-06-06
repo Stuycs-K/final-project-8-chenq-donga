@@ -2,6 +2,8 @@ public class Level {
   private Waves enemyWaves;
   private int[][] gameBoard;
   private Map gameMap;
+  private int maxWave;
+  private int currentWave;
   private int health; // drops when enemies cross the end
   private int money; // amount of money that the player has
   private ArrayList<Tower> towers;
@@ -12,7 +14,9 @@ public class Level {
   private final int path = -1;
   
   public Level(String name) { // normal constructor used in normal games
-    enemyWaves = new Waves(20):
+    maxWave = 20;
+    enemyWaves = new Waves(20);
+    currentWave = 1;
     gameBoard = new int[width/60][height/60];
     start = new int[]{0, 4};
     end = new int[]{gameBoard.length - 1, 4};
@@ -26,6 +30,8 @@ public class Level {
   }
   
   public Level(String name, int hp, int mulah) { // cheat constrctor for demo cases
+    enemyWaves = new Waves(20);
+    currentWave = 1;
     gameBoard = new int[width/60][height/60];
     gameMap = new Map(name, new int[]{0, 4}, new int[]{gameBoard.length - 1, 4});
     towers = new ArrayList<Tower>();
@@ -115,15 +121,21 @@ public class Level {
   }
   
   public boolean isWon() {
-    if (enemyWaves.getWaveNumber() == enemyWaves.getMaxWaves()) {
+    if (currentWave == maxWave && enemyWaves.waveFinished()) {
        return true; 
     }
     return false;
   }
   
+  public void nextWave() {
+    if (enemyWaves.waveFinished()) {
+       enemyWaves = new Waves(20 + (int)(Math.random() * (currentWave / 2)));
+    }
+  }
+  
   /* THIS PART IS ALL GETTER METHODS
      CURRENTLY INCLUDES;
-      - getting the grid(int[][]), money, health, towers, enemies
+      - getting the grid(int[][]), money, health, towers, enemies, and waves, as well as current wave
   */
   public int[][] getBoard() {
     return gameBoard;
@@ -143,6 +155,14 @@ public class Level {
   
   public ArrayList<Enemy> getEnemies() {
     return enemies; 
+  }
+  
+  public int getCurrentWave() {
+     return currentWave; 
+  }
+  
+  public Waves getWaves() {
+    return enemyWaves; 
   }
   
   /* THIS PART OF THE CODE FOR ENEMY RELATED FUNCTIONS

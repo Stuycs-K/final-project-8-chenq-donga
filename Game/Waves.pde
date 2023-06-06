@@ -8,7 +8,7 @@ public class Waves {
    public Waves(int enemyCount) {
       currentAmount = 0;
       maxSize = enemyCount;
-      enemyStats = new ArrayDeque<Enemies>();
+      enemies = new ArrayDeque<int[]>();
       generateEnemies();
    }
    
@@ -17,6 +17,7 @@ public class Waves {
         currentAmount--;
         return enemies.poll(); // gets first thing in ArrayDeque 
       }
+      return new int[]{-1};
    }
    
    public void generateEnemies() {
@@ -24,6 +25,7 @@ public class Waves {
          int speed = (int)(Math.random() * 3);
          int hp = (int)(Math.random() * 2);
          enemies.add(new int[]{hp, speed});
+         currentAmount++;
       }  
    }
    
@@ -31,5 +33,6 @@ public class Waves {
       if (currentAmount == 0) {
          return true; 
       }
+      return false;
    }
 }
