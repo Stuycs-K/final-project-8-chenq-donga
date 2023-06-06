@@ -34,19 +34,22 @@ void draw() {
   }
 }
 
-void spawnEnemyInWave() {
-   
+void detectWaveEnd(int[] stats) {
+   if (stats[0] == -1 && gameLevel.ge) 
 }
 
 void tick() {
-  int[] stats = gameLevel.getWaves().getNextEnemyInWave();
-  int spawnCD = stats[2];
+  int spawnCD = 20;
   float attackCooldown = 0;
   ArrayList<Tower> towers = gameLevel.getTowers();
   if (towers.size() > 0) {
      attackCooldown = towers.get(0).returncdt();
   }
   if (frameCount - frameLastSpawned >= spawnCD) {
+    int[] stats = gameLevel.getWaves().getNextEnemyInWave();
+    detectWaveEnd(stats);
+    frameLastSpawned = frameCount;
+    spawnCD = stats[2];
     gameLevel.spawnEnemy(false, stats[0], stats[1]);
   }
   gameLevel.enemyMove();
