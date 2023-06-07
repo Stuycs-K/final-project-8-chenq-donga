@@ -15,7 +15,7 @@ public class Level {
   
   public Level(String name) { // normal constructor used in normal games
     maxWave = 20;
-    enemyWaves = new Waves(20);
+    enemyWaves = new Waves(20, 1);
     currentWave = 1;
     gameBoard = new int[width/60][height/60];
     start = new int[]{0, 4};
@@ -30,7 +30,7 @@ public class Level {
   }
   
   public Level(String name, int hp, int mulah) { // cheat constrctor for demo cases
-    enemyWaves = new Waves(20);
+    enemyWaves = new Waves(20, 1);
     currentWave = 1;
     gameBoard = new int[width/60][height/60];
     gameMap = new Map(name, new int[]{0, 4}, new int[]{gameBoard.length - 1, 4});
@@ -129,7 +129,7 @@ public class Level {
   
   public void nextWave() {
     currentWave++;
-    enemyWaves = new Waves(20 + (int)(Math.random() * (currentWave / 2)));
+    enemyWaves = new Waves(20 + (int)(Math.random() * currentWave), currentWave);
   }
   
   /* THIS PART IS ALL GETTER METHODS

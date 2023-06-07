@@ -4,11 +4,13 @@ public class Waves {
    private int currentAmount;
    private int maxSize;
    private ArrayDeque<int[]> enemies;
+   private int waveNum;
    
-   public Waves(int enemyCount) {
+   public Waves(int enemyCount, int currentWave) {
       currentAmount = 0;
       maxSize = enemyCount;
       enemies = new ArrayDeque<int[]>();
+      waveNum = currentWave;
       generateEnemies();
    }
    
@@ -22,9 +24,9 @@ public class Waves {
    
    public void generateEnemies() {
       while (currentAmount < maxSize) {
-         int delay = 20 + (int)(Math.random() * 30);
+         int delay = 20 + (int)(Math.random() * 60);
          int speed = (int)(Math.random() * 3);
-         int hp = 1 + (int)(Math.random() * 3);
+         int hp = 1 + (int)(Math.random() * 3) + healthScaling();
          enemies.add(new int[]{hp, speed, delay});
          currentAmount++;
       }  
@@ -35,5 +37,15 @@ public class Waves {
          return true; 
       }
       return false;
+   }
+   
+   public int healthScaling() {
+      if (waveNum <= 10) {
+         return (int)(Math.random() * (waveNum / 3)); 
+      }
+      else if (waveNum >= 10) {
+        return (int)(Math.random() * (waveNum / 2)); 
+      }
+      return 0;
    }
 }
