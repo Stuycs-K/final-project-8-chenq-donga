@@ -2,6 +2,8 @@ Level gameLevel;
 int towerAmount;
 int prevTowerAmount;
 int frameLastAttacked = 0;
+int frameLastSpawned = 0;
+int currentWave;
 
 void setup() {
   size(1080, 900);
@@ -19,9 +21,9 @@ void draw() {
     textSize(25);
     tick();
     text(frameCount, 10, 30);
-    drawMoneyHealth();
+    drawMoneyHealthWave();
   }
-  else {
+  else if (gameLevel.getHealth() <= 0) {
      background(255);
      fill(255, 0, 0); 
      textSize(100);
@@ -32,14 +34,37 @@ void draw() {
   }
 }
 
+
+boolean detectWaveEnd(int[] stats) {
+   return (stats[0] == -1 && gameLevel.getEnemies().size() == 0);
+}
+
+boolean isEnemyInBuffer(int[] stats) {
+  return (!(stats[0] == -1));
+}
+
 void tick() {
-  float cooldown = 0;
+  debugPrint();
+  int spawnCD = 20;
+  float attackCooldown = 0;
   ArrayList<Tower> towers = gameLevel.getTowers();
   if (towers.size() > 0) {
-     cooldown = towers.get(0).returncdt();
+     attackCooldown = towers.get(0).returncdt();
+  }
+  if (frameCount - frameLastSpawned >= spawnCD) {
+    int[] stats = gameLevel.getWaves().getNextEnemyInWave();
+    if (isEnemyInBuffer(stats)) {
+      frameLastSpawned = frameCount;
+      spawnCD = stats[2];
+ 
+      gameLevel.spawnEnemy(false, stats[0], stats[1]);
+    }
+    if (detectWaveEnd(stats)) {
+      gameLevel.nextWave(); 
+    }
   }
   gameLevel.enemyMove();
-  if (frameCount - frameLastAttacked >= cooldown) {
+  if (frameCount - frameLastAttacked >= attackCooldown) {
     gameLevel.attack();
     frameLastAttacked = frameCount;
   }
@@ -70,10 +95,11 @@ void drawGrid() {
   }
 }
 
-void drawMoneyHealth() {
+void drawMoneyHealthWave() {
    textSize(30);
    text("Health: " + gameLevel.getHealth(),10, 60); 
    text("Money: " + gameLevel.getMoney(),10, 90);
+   text("Current Wave: " + gameLevel.getCurrentWave(), 10, 120);
 }
 
 void drawEntities() {
@@ -85,7 +111,7 @@ void drawEntities() {
        tower1.displayTower();
     }
     prevTowerAmount++;
-  // }
+  // } //<>//
   ArrayList<Enemy> enemies = gameLevel.getEnemies(); //<>//
   for (int i = 0; i < enemies.size(); i++) {
     Enemy enemy1 = enemies.get(i);
@@ -100,7 +126,7 @@ void mouseClicked() {
       gameLevel.placeTower(mouseX, mouseY, 250); 
       towerAmount++;
     }
-  }
+  } //<>//
   else if (mouseButton == RIGHT) { //<>//
     gameLevel.spawnEnemyDebug(mouseX, mouseY);
   }
@@ -113,4 +139,8 @@ void keyPressed() {
   else if (key == ' ') {
       gameLevel.spawnEnemy(true, 1000000, 100);
   }
+}
+
+void debugPrint() {
+  // println("size: " + gameLevel.getEnemies().size()); 
 }

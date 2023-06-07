@@ -1,6 +1,9 @@
 public class Level {
+  private Waves enemyWaves;
   private int[][] gameBoard;
   private Map gameMap;
+  private int maxWave;
+  private int currentWave;
   private int health; // drops when enemies cross the end
   private int money; // amount of money that the player has
   private ArrayList<Tower> towers;
@@ -11,6 +14,9 @@ public class Level {
   private final int path = -1;
   
   public Level(String name) { // normal constructor used in normal games
+    maxWave = 20;
+    enemyWaves = new Waves(20, 1);
+    currentWave = 1;
     gameBoard = new int[width/60][height/60];
     start = new int[]{0, 4};
     end = new int[]{gameBoard.length - 1, 4};
@@ -24,6 +30,8 @@ public class Level {
   }
   
   public Level(String name, int hp, int mulah) { // cheat constrctor for demo cases
+    enemyWaves = new Waves(20, 1);
+    currentWave = 1;
     gameBoard = new int[width/60][height/60];
     gameMap = new Map(name, new int[]{0, 4}, new int[]{gameBoard.length - 1, 4});
     towers = new ArrayList<Tower>();
@@ -31,7 +39,10 @@ public class Level {
     health = hp;
     money = mulah;
   }
-  
+  /* THIS PART OF THE CODE HANDLES THE PATH AND WHERE ENEMIES SHOULD GO
+     CURRENTLY INCLUDES:
+      - adding waypoints, setting the path on the int[][], and a helper method
+  */
   public void waypoints() {
     addWaypoint(new int[]{3, 4});
     addWaypoint(new int[]{3, 10});
@@ -39,10 +50,139 @@ public class Level {
     addWaypoint(new int[]{11, 4});
   }
   
-  // what updates the enemies positions; game will handle the drawing
+    public void addWaypoint(int[] cord) {
+    gameMap.addWaypoint(cord);
+  }
+
+  public void setPath() {
+     gameBoard[start[0]][start[1]] = -1;
+     int currentX = start[0];
+     int currentY = start[1];
+     int[] nextLocation = null;
+     while (gameMap.getSize() >= 1) {
+        nextLocation = gameMap.nextLocation();
+        gameBoard[nextLocation[0]][nextLocation[1]] = -1;
+        for (int i = currentX; i < nextLocation[0]; i++) {
+          if (currentY < nextLocation[1]) {
+            for (int j = currentY; j <= nextLocation[1]; j++) {
+              gameBoard[i][j] = path;
+            }
+          } else {
+            for (int j = currentY; j >= nextLocation[1]; j--) {
+              gameBoard[i][j] = path;
+            }
+          }
+        currentX = nextLocation[0];
+        currentY = nextLocation[1];
+       }
+    }
+  }
   
-  // Should run every frames(60 frames per second)
-  public void enemyMove() {
+  /* THIS PART INCLUDES ALL THE CODE THAT HAS THE GAME LOGIC
+     CURRENTLY INCLUDES: 
+       - attacking
+       - placing tower(and helper for using up money)
+       - losing health
+       - checking for a win
+  */
+  public void attack() {
+     for (int i = 0; i < enemies.size(); i++) {
+       Enemy enemy = enemies.get(i);
+       for (int j = 0; j < towers.size(); j++) {
+          Tower tower1 = towers.get(j);
+          if (enemy.loseHealth(tower1.getDamage(), tower1.getRange())) {
+            fill(255, 0, 0);
+            //change sprite
+            PImage deadEnemy = loadImage("RedBalloonEnemyPopping.png");
+            if (enemy.getHealth() < 10000) {
+              image(deadEnemy, enemy.getX(), enemy.getY());
+              text("POP!", enemy.getX(), enemy.getY() - 15);
+            }
+            //circle(enemy.getX(), enemy.getY(), 20);
+          }
+       }
+     }
+  }
+  
+  // will be called from mouseCLicked function, x and y will the mouseX, mouseY
+  public void placeTower(int x, int y, int towerCost) {
+    if (money >= towerCost) {
+      useMoney(towerCost);
+      towers.add(new Tower(1, 100, 100, 10, x, y)); // will change stats later
+    }
+  }
+  
+  public void useMoney(int moneyUsed) {
+    money = money - moneyUsed;
+  }
+  
+  public void loseHP() { // Eventually different enemies will cause different amount of health loss
+    health--; 
+  }
+  
+  public boolean isWon() {
+    if (currentWave == maxWave && enemyWaves.waveFinished()) {
+       return true; 
+    }
+    return false;
+  }
+  
+  public void nextWave() {
+    currentWave++;
+    enemyWaves = new Waves(20 + (int)(Math.random() * currentWave), currentWave);
+  }
+  
+  /* THIS PART IS ALL GETTER METHODS
+     CURRENTLY INCLUDES;
+      - getting the grid(int[][]), money, health, towers, enemies, and waves, as well as current wave
+  */
+  public int[][] getBoard() {
+    return gameBoard;
+  }
+ 
+  public int getMoney() {
+    return money;
+  }
+  
+  public int getHealth() {
+    return health; 
+  }
+  
+  public ArrayList<Tower> getTowers() {
+    return towers; 
+  }
+  
+  public ArrayList<Enemy> getEnemies() {
+    return enemies; 
+  }
+  
+  public int getCurrentWave() {
+     return currentWave; 
+  }
+  
+  public Waves getWaves() {
+    return enemyWaves; 
+  }
+  
+  /* THIS PART OF THE CODE FOR ENEMY RELATED FUNCTIONS
+     CURRENTLY INCLUDES:
+        - removing dead enemies
+        - moving the enemies and the helper method required for enemies to change directions
+        - checking if an enemy is at the end, which will cause the player to lose health
+        - debug enemy spawning, one at mouse with preloaded stats, and one in the given start square and/or bosses
+  */
+  public void removeDeadEnemies() {
+    for (int i = 0; i < enemies.size(); i++) {
+       Enemy enemy = enemies.get(i);
+       if (enemy.dropMoney() == 100) {
+         money += 100;
+         enemies.remove(i);
+         i--; // Decrement i to account for the removed enemy
+      }
+    }
+  } 
+  
+    public void enemyMove() {
     enemyAtEnd();
     for (int i = 0; i < enemies.size(); i++) {
       Enemy enemy = enemies.get(i);
@@ -80,15 +220,6 @@ public class Level {
     // If no valid direction is found, default to right
     return "right";
   }  
-
-  public boolean enemyMoveHelper(int futureX, int futureY) {
-      int gridX = futureX / 60;
-      int gridY = futureY / 60;
-      if ((gridX < gameBoard.length && gridY < gameBoard[0].length) && gameBoard[gridX][gridY] == -1) {
-        return true;
-      }
-      return false;
-  }
   
   public void enemyAtEnd() {
     for (int i = 0; i < enemies.size(); i++) {
@@ -100,19 +231,16 @@ public class Level {
           health--;
         }
         else if (enemy.getHealth() > 10000) {
-          health -= 20;
+          health = 0;
         }
         i--; // Decrement i to account for the removed enemy
       }
     }
   }
-
-  // will be called from mouseCLicked function, x and y will the mouseX, mouseY
-  public void placeTower(int x, int y, int towerCost) {
-    if (money >= towerCost) {
-      useMoney(towerCost);
-      towers.add(new Tower(1, 100, 100, 10, x, y)); // will change stats later
-    }
+  
+ // debug, used to test tower attacks
+  public void spawnEnemyDebug(int x, int y) {
+    enemies.add(new Enemy(1, 10, x, y, false)); //placeholder values
   }
   
   // for special enemies
@@ -121,97 +249,4 @@ public class Level {
     int spawnY = start[1]*60 + 30;
     enemies.add(new Enemy(hp, speed, spawnX, spawnY, isBoss)); //placeholder values
   }
-  
-  
-  // debug, used to test tower attacks
-  public void spawnEnemyDebug(int x, int y) {
-    enemies.add(new Enemy(1, 10, x, y, false)); //placeholder values
-  }
-  
-  
-  public void loseHP() { // Eventually different enemies will cause different amount of health loss
-    health--; 
-  }
-  
-  public int[][] getBoard() {
-    return gameBoard;
-  }
- 
-  public int getMoney() {
-    return money;
-  }
-  
-  public void useMoney(int moneyUsed) {
-    money = money - moneyUsed;
-  }
-  
-  public int getHealth() {
-    return health; 
-  }
-  
-  public ArrayList<Tower> getTowers() {
-    return towers; 
-  }
-  
-  public ArrayList<Enemy> getEnemies() {
-    return enemies; 
-  }
-  
-  public void addWaypoint(int[] cord) {
-    gameMap.addWaypoint(cord);
-  }
-
-  public void setPath() {
-     gameBoard[start[0]][start[1]] = -1;
-     int currentX = start[0];
-     int currentY = start[1];
-     int[] nextLocation = null;
-     while (gameMap.getSize() >= 1) {
-        nextLocation = gameMap.nextLocation();
-        gameBoard[nextLocation[0]][nextLocation[1]] = -1;
-        for (int i = currentX; i < nextLocation[0]; i++) {
-          if (currentY < nextLocation[1]) {
-            for (int j = currentY; j <= nextLocation[1]; j++) {
-              gameBoard[i][j] = path;
-            }
-          } else {
-            for (int j = currentY; j >= nextLocation[1]; j--) {
-              gameBoard[i][j] = path;
-            }
-          }
-        currentX = nextLocation[0];
-        currentY = nextLocation[1];
-       }
-    }
-  }
-  
-  public void attack() {
-     for (int i = 0; i < enemies.size(); i++) {
-       Enemy enemy = enemies.get(i);
-       for (int j = 0; j < towers.size(); j++) {
-          Tower tower1 = towers.get(j);
-          if (enemy.loseHealth(tower1.getDamage(), tower1.getRange())) {
-            fill(255, 0, 0);
-            //change sprite
-            PImage deadEnemy = loadImage("RedBalloonEnemyPopping.png");
-            if (enemy.getHealth() < 10000) {
-              image(deadEnemy, enemy.getX(), enemy.getY());
-              text("POP!", enemy.getX(), enemy.getY() - 15);
-            }
-            //circle(enemy.getX(), enemy.getY(), 20);
-          }
-       }
-     }
-  }
-  
-  public void removeDeadEnemies() {
-    for (int i = 0; i < enemies.size(); i++) {
-       Enemy enemy = enemies.get(i);
-       if (enemy.dropMoney() == 100) {
-         money += 100;
-         enemies.remove(i);
-         i--; // Decrement i to account for the removed enemy
-      }
-    }
-  } 
 }
