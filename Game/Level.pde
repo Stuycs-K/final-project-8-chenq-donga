@@ -128,6 +128,7 @@ public class Level {
   }
   
   public void nextWave() {
+    currentWave++;
     enemyWaves = new Waves(20 + (int)(Math.random() * (currentWave / 2)));
   }
   
