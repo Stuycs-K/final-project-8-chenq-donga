@@ -192,11 +192,11 @@ public class Level {
       int nextX = currentX;
       int nextY = currentY;
       if (currentDirection.equals("right")) {
-        nextX = currentX + 1;
+        nextX = currentX + 45;
       } else if (currentDirection.equals("down")) {
-        nextY = currentY + 1;
+        nextY = currentY + 45;
       } else if (currentDirection.equals("up")) {
-        nextY = currentY - 1;
+        nextY = currentY - 45;
       }
       if (gameBoard[nextX / 60][nextY / 60] == -1) {
         enemy.move();
