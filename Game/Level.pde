@@ -112,6 +112,10 @@ public class Level {
     }
   }
   
+  public void setWave() {
+     currentWave = 21; 
+  }
+  
   public void useMoney(int moneyUsed) {
     money = money - moneyUsed;
   }
@@ -244,9 +248,10 @@ public class Level {
   }
   
   // for special enemies
-  public void spawnEnemy(boolean isBoss, int hp, int speed) {
+  public void spawnEnemy(int hp, int speed) {
     int spawnX = start[0]*60 + 30;
     int spawnY = start[1]*60 + 30;
+    boolean isBoss = (hp > 1000);
     enemies.add(new Enemy(hp, speed, spawnX, spawnY, isBoss)); //placeholder values
   }
 }

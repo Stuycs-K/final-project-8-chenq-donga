@@ -5,9 +5,11 @@ public class Waves {
    private int maxSize;
    private ArrayDeque<int[]> enemies;
    private int waveNum;
+   private int bossSpawned;
    
    public Waves(int enemyCount, int currentWave) {
       currentAmount = 0;
+      bossSpawned = 0;
       maxSize = enemyCount;
       enemies = new ArrayDeque<int[]>();
       waveNum = currentWave;
@@ -27,6 +29,9 @@ public class Waves {
          int delay = 20 + (int)(Math.random() * 60);
          int speed = (int)(Math.random() * 3);
          int hp = 1 + (int)(Math.random() * 3) + healthScaling();
+         if (spawnBoss()) {
+           hp = 999999999; 
+         }
          enemies.add(new int[]{hp, speed, delay});
          currentAmount++;
       }  
@@ -47,5 +52,17 @@ public class Waves {
         return (int)(Math.random() * (waveNum / 2)); 
       }
       return 0;
+   }
+   
+   public boolean spawnBoss() {
+     if (waveNum >= 20 && bossSpawned == 0) {
+       float chance = waveNum * 0.01;
+       println(chance);
+       if (Math.random() > chance) {
+         bossSpawned = 1;
+         return true; 
+       }
+     }
+     return false;
    }
 }
