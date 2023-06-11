@@ -16,7 +16,7 @@ public class Enemy {
   //needs a money drop amount
   public int dropMoney() {
     if (isDead()) {
-      return 100;
+      return 25;
       //drop a certain amount of money based on the type of enemy
       //will probably have inherited enemies. 
       //we can make this money scaled to the enemy's health, or just a set amount everytime.
@@ -62,7 +62,7 @@ public class Enemy {
   }
   
   public boolean isDead() {
-    if (!(hp > 0)) { 
+    if (hp <= 0) { 
       return true;
     }
     return false;
@@ -86,13 +86,13 @@ public class Enemy {
   
   public void move() {
     if (direction.equals("up")) {
-       ycoord--; 
+       ycoord = ycoord - (int)speed; 
     }
     else if (direction.equals("down")) {
-       ycoord++; 
+       ycoord = ycoord + (int)speed; 
     }
     else if (direction.equals("right")) {
-       xcoord++; 
+       xcoord = xcoord + (int)speed; 
     }
   }
   

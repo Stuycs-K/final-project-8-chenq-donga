@@ -2,21 +2,26 @@ public class Tower {
   private float damage;
   private float cooldownTime; // measured in frames
   private int range;
-  private int attacksbtwabilities;
   private int xcoord;
   private int ycoord;
-  private int TowerLevel;
+  private int towerLevel;
+  private int maxEnemiesAttacked;
+  private int maxTowerLevel;
+  private int upgradeCost;
   
   PImage BlueTower = loadImage("BlueTowerTestingTwo.png");
   PImage BlueTowerUp = loadImage("BlueTowerLevelTwo.png");
   //testing
   
-  public Tower(float dmg, float cd, int rng, int aba, int x, int y) {
+  public Tower(float dmg, float cd, int rng, int x, int y, int maxEnemies) {
     damage = dmg;
     cooldownTime = cd;
     range = rng;
-    attacksbtwabilities = aba;
     fixXY(x, y);
+    maxEnemiesAttacked = maxEnemies;
+    maxTowerLevel = 3;
+    towerLevel = 1;
+    upgradeCost = 75;
   }
   
   public void fixXY(int x, int y) {
@@ -57,25 +62,37 @@ public class Tower {
   THESE METHODS WILL BE CALLED IN LEVEL, WHERE CHECKING THE ENEMIES IN RANGE WOULD BE COMPLETED
   */
 
-  public int upgrades(boolean hasMoney) {
+  public int upgrades() {
     //check 
-    if (hasMoney) {
-      TowerLevel++;
+    if (towerLevel < maxTowerLevel) {
+      increaseCost();
+      towerLevel++;
       damage++;
-      range++;
-      cooldownTime--;
+      range += 25;
+      cooldownTime -= 10;
       //add a certain amount to damage, probably needs to be overridden.
       //add a certain amount to range, or subtract.
       //change cooldowntime based on type
       //change money as well
       //reduce the money based on what level the tower's on
       //or just a set amount each time for each upgrade.
-      return (TowerLevel * 5);
+      return upgradeCost;
     }
     return 0;
   }
   
+  public void increaseCost() {
+     upgradeCost = upgradeCost * 3; 
+  }
+  
+  public int getUpgradeCost() {
+     return upgradeCost; 
+  }
+  
   public void displayTower() {
+    fill(0);
+    textSize(13);
+    text("Level: " + towerLevel, xcoord - 7, ycoord - 2);
     image(BlueTower, xcoord, ycoord);  
   }
   
@@ -85,6 +102,10 @@ public class Tower {
   
   public float getCD() {
      return cooldownTime; 
+  }
+  
+  public int getMax() {
+    return maxEnemiesAttacked; 
   }
   
   public int[][] getRange() {
@@ -100,7 +121,7 @@ public class Tower {
   }
   
   public int getLevel() {
-    return TowerLevel; 
+    return towerLevel; 
   }
   
   //public void highlight() {

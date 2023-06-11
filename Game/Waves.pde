@@ -8,6 +8,9 @@ public class Waves {
    private int bossSpawned;
    
    public Waves(int enemyCount, int currentWave) {
+      if (currentWave % 5 == 0) {
+         enemyCount++; 
+      }
       currentAmount = 0;
       bossSpawned = 0;
       maxSize = enemyCount;
@@ -25,9 +28,17 @@ public class Waves {
    }
    
    public void generateEnemies() {
+     if (waveNum % 5 == 0) {
+        int delay = 20 + (int)(Math.random() * 60);
+        int speed = 1;
+        int hp = (waveNum * 5) + healthScaling();
+        enemies.add(new int[]{hp, speed, delay});
+        currentAmount++;
+     }
+     else {
       while (currentAmount < maxSize) {
          int delay = 20 + (int)(Math.random() * 60);
-         int speed = (int)(Math.random() * 3);
+         int speed = 1 + (int)(Math.random() * 2);
          int hp = 1 + (int)(Math.random() * 3) + healthScaling();
          if (spawnBoss()) {
            hp = 999999999; 
@@ -35,6 +46,7 @@ public class Waves {
          enemies.add(new int[]{hp, speed, delay});
          currentAmount++;
       }  
+     }
    }
    
    public boolean waveFinished() {
@@ -65,4 +77,5 @@ public class Waves {
      }
      return false;
    }
+   
 }

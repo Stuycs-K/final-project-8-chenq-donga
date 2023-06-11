@@ -3,7 +3,7 @@ int towerAmount;
 int prevTowerAmount;
 int frameLastAttacked = 0;
 int frameLastSpawned = 0;
-int currentWave;
+boolean hasWon = false;
 
 void setup() {
   size(1080, 900);
@@ -14,7 +14,17 @@ void setup() {
 }
 
 void draw() {
-  if (gameLevel.getHealth() >= 1) {
+  if (gameLevel.getCurrentWave() > 20) {
+    background(255);
+    hasWon = true;
+    fill(0, 255, 0);
+    textSize(100);
+    text("YOU WIN!", 310, 450);
+    fill(0);
+    textSize(50);
+    text("Press spacebar to restart", 270, 550);
+  }
+  else if (gameLevel.getHealth() >= 1) {
     background(255);
     drawGrid();
     drawEntities();
@@ -35,7 +45,6 @@ void draw() {
   }
 }
 
-
 boolean detectWaveEnd(int[] stats) {
    return (stats[0] == -1 && gameLevel.getEnemies().size() == 0);
 }
@@ -44,6 +53,7 @@ boolean isEnemyInBuffer(int[] stats) {
   return (!(stats[0] == -1));
 }
 
+// TICK: WHAT ACTUALLY RUNS THE DAMAGE CALCULATIONS
 void tick() {
   int spawnCD = 20;
   float attackCooldown = 0;
@@ -70,6 +80,8 @@ void tick() {
   gameLevel.removeDeadEnemies();
 }
 
+// DRAWING FUNCTIONS
+// CURRENTLY INCLUDES DRAWING THE GRID, AS WELL AS THE ENEMIES AND TOWERS AS WELL AS MONEY
 void drawGrid() {
   int[][] grid = gameLevel.getBoard();
   fill(0);
@@ -94,18 +106,11 @@ void drawGrid() {
   }
 }
 
-void drawMoneyHealthWave() {
-   textSize(30);
-   text("Health: " + gameLevel.getHealth(),10, 60); 
-   text("Money: " + gameLevel.getMoney(),10, 90);
-   text("Current Wave: " + gameLevel.getCurrentWave(), 10, 120);
-}
-
 void drawEntities() {
   fill(0); 
   // if (prevTowerAmount != towerAmount) { 
     ArrayList<Tower> t = gameLevel.getTowers();
-     for (int i = 0; i <  t.size(); i++) {
+     for (int i = 0; i <  t.size(); i++) { //<>//
        Tower tower1 = t.get(i);
        tower1.displayTower();
     }
@@ -118,29 +123,11 @@ void drawEntities() {
   }
 }
 
-void mouseClicked() {
-  if (mouseButton == LEFT) {
-    int[][] gameB = gameLevel.getBoard();
-    if (!(gameB[mouseX/60][mouseY/60] == -1)) {
-      gameLevel.placeTower(mouseX, mouseY, 250); 
-      towerAmount++;
-    }
-  } //<>// //<>// //<>//
-  else if (mouseButton == RIGHT) { //<>//
-    gameLevel.spawnEnemyDebug(mouseX, mouseY);
-  }
-}
-
-void keyPressed() {
-  if (gameLevel.getHealth() <= 0 && key == ' ') {
-     gameLevel = new Level("Level 1");
-  }
-  else if (key == ' ') {
-      gameLevel.spawnEnemy(1000000, 100);
-  }
-  else if (key == 's') {
-     gameLevel.setWave(); 
-  }
+void drawMoneyHealthWave() {
+   textSize(30);
+   text("Health: " + gameLevel.getHealth(),10, 60);  //<>//
+   text("Money: " + gameLevel.getMoney(),10, 90);
+   text("Current Wave: " + gameLevel.getCurrentWave(), 10, 120);
 }
 
 void highlightTowerRange() {
@@ -163,5 +150,35 @@ void drawHighlight() {
     int[][] range = toHighlight.getRange();
     int numRange = toHighlight.getNumRange();
     square(range[0][0], range[0][1], numRange * 2.3);
+  }
+}
+
+
+// INPUT DETECTION, CURRETNLY ON MOUSELEFT CLICK AND KEY PRESSES
+void mouseClicked() {
+  if (mouseButton == LEFT) {
+    if (mouseButton == LEFT) {
+       int[][] gameB = gameLevel.getBoard();
+       if (!(gameB[mouseX/60][mouseY/60] == -1)) {
+      gameLevel.placeTower(mouseX, mouseY, 250, 1); 
+      towerAmount++;
+       }
+    }
+  }
+}
+
+void keyPressed() {
+  if ((gameLevel.getHealth() <= 0 || hasWon)  && key == ' ') {
+     hasWon = false;
+     gameLevel = new Level("Level 1");
+  }
+  else if (key == ' ') {
+      gameLevel.spawnEnemy(1000000, 100);
+  }
+  else if (key == '1') {
+     gameLevel.setWave(9); 
+  }
+  else if (key == 'u') {
+    gameLevel.upgradeTower(mouseX, mouseY);
   }
 }

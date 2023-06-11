@@ -27,7 +27,7 @@ public class Level {
     towers = new ArrayList<Tower>();
     enemies = new ArrayList<Enemy>();
     health = 20;
-    money = 250;
+    money = 500;
     towerIndex = 0;
   }
   
@@ -87,12 +87,16 @@ public class Level {
        - losing health
        - checking for a win
   */
+ 
   public void attack() {
-     for (int i = 0; i < enemies.size(); i++) {
-       Enemy enemy = enemies.get(i);
-       for (int j = 0; j < towers.size(); j++) {
-          Tower tower1 = towers.get(j);
-          if (enemy.loseHealth(tower1.getDamage(), tower1.getRange())) {
+     for (int i = 0; i < towers.size(); i++) {
+       Tower tower = towers.get(i);
+       int currentAttacked = 0;
+       int maxEnemies = tower.getMax();
+       for (int j = 0; j < enemies.size() && currentAttacked < maxEnemies; j++) {
+          Enemy enemy = enemies.get(j);
+          if (enemy.loseHealth(tower.getDamage(), tower.getRange())) {
+            currentAttacked++;
             fill(255, 0, 0);
             //change sprite
             PImage deadEnemy = loadImage("RedBalloonEnemyPopping.png");
@@ -100,19 +104,22 @@ public class Level {
               image(deadEnemy, enemy.getX(), enemy.getY());
               text("POP!", enemy.getX(), enemy.getY() - 15);
             }
-            //circle(enemy.getX(), enemy.getY(), 20);
           }
        }
      }
+     removeDeadEnemies();
   }
   
+  
+  
   // will be called from mouseCLicked function, x and y will the mouseX, mouseY
-  public void placeTower(int x, int y, int towerCost) {
+  public void placeTower(int x, int y, int towerCost, int towerType) {
+    int maxEnemies = 10000000;
     if (money >= towerCost && canPlace(x, y)) {
       useMoney(towerCost);
       gameBoard[x/60][y/60] = towerIndex + 1;
       towerIndex++;
-      towers.add(new Tower(1, 100, 100, 10, x, y)); // will change stats later
+      towers.add(new Tower(1, 100, 100, x, y, maxEnemies)); // will change stats later
     }
   }
   
@@ -123,8 +130,16 @@ public class Level {
     return true;
   }
   
-  public void setWave() {
-     currentWave = 21; 
+  public void upgradeTower(int x, int y) {
+    Tower tower = towers.get(gameBoard[x/60][y/60] - 1);
+    if (money >= tower.getUpgradeCost()) {
+       int cost = tower.upgrades();
+       money = money - cost;
+    }
+  }
+  
+  public void setWave(int wave) {
+     currentWave = wave; 
   }
   
   public void useMoney(int moneyUsed) {
@@ -193,8 +208,8 @@ public class Level {
   public void removeDeadEnemies() {
     for (int i = 0; i < enemies.size(); i++) {
        Enemy enemy = enemies.get(i);
-       if (enemy.dropMoney() == 100) {
-         money += 100;
+       if (enemy.dropMoney() == 25) {
+         money += 25;
          enemies.remove(i);
          i--; // Decrement i to account for the removed enemy
       }
@@ -247,7 +262,7 @@ public class Level {
       if (currentX >= end[0]*61) {
         enemies.remove(i);
         if (enemy.getHealth() < 10000) {
-          health--;
+          health = health - (int)(enemy.getHealth());
         }
         else if (enemy.getHealth() > 10000) {
           health = 0;
