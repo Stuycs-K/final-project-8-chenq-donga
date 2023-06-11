@@ -56,8 +56,7 @@ void tick() {
     if (isEnemyInBuffer(stats)) {
       frameLastSpawned = frameCount;
       spawnCD = stats[2];
- 
-      gameLevel.spawnEnemy(false, stats[0], stats[1]);
+      gameLevel.spawnEnemy(stats[0], stats[1]);
     }
     if (detectWaveEnd(stats)) {
       gameLevel.nextWave(); 
@@ -111,7 +110,7 @@ void drawEntities() {
        tower1.displayTower();
     }
     prevTowerAmount++;
-  // } //<>//
+  // } //<>// //<>//
   ArrayList<Enemy> enemies = gameLevel.getEnemies(); //<>//
   for (int i = 0; i < enemies.size(); i++) {
     Enemy enemy1 = enemies.get(i);
@@ -126,7 +125,7 @@ void mouseClicked() {
       gameLevel.placeTower(mouseX, mouseY, 250); 
       towerAmount++;
     }
-  } //<>//
+  } //<>// //<>//
   else if (mouseButton == RIGHT) { //<>//
     gameLevel.spawnEnemyDebug(mouseX, mouseY);
   }
@@ -137,7 +136,10 @@ void keyPressed() {
      gameLevel = new Level("Level 1");
   }
   else if (key == ' ') {
-      gameLevel.spawnEnemy(true, 1000000, 100);
+      gameLevel.spawnEnemy(1000000, 100);
+  }
+  else if (key == 's') {
+     gameLevel.setWave(); 
   }
 }
 
