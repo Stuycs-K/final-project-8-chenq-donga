@@ -76,7 +76,7 @@ public class Tower {
       //change money as well
       //reduce the money based on what level the tower's on
       //or just a set amount each time for each upgrade.
-      return (towerLevel * 75);
+      return upgradeCost;
     }
     return 0;
   }
@@ -90,6 +90,9 @@ public class Tower {
   }
   
   public void displayTower() {
+    fill(0);
+    textSize(13);
+    text("Level: " + towerLevel, xcoord - 7, ycoord - 2);
     image(BlueTower, xcoord, ycoord);  
   }
   
