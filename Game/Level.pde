@@ -119,7 +119,7 @@ public class Level {
       useMoney(towerCost);
       gameBoard[x/60][y/60] = towerIndex + 1;
       towerIndex++;
-      towers.add(new Tower(1, 100, 100, 10, x, y, maxEnemies)); // will change stats later
+      towers.add(new Tower(1, 100, 100, x, y, maxEnemies)); // will change stats later
     }
   }
   
@@ -130,8 +130,16 @@ public class Level {
     return true;
   }
   
-  public void setWave() {
-     currentWave = 21; 
+  public void upgradeTower(int x, int y) {
+    Tower tower = towers.get(gameBoard[x/60][y/60] - 1);
+    if (money >= tower.getUpgradeCost()) {
+       int cost = tower.upgrades();
+       money = money - cost;
+    }
+  }
+  
+  public void setWave(int wave) {
+     currentWave = wave; 
   }
   
   public void useMoney(int moneyUsed) {

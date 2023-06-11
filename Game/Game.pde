@@ -175,7 +175,10 @@ void keyPressed() {
   else if (key == ' ') {
       gameLevel.spawnEnemy(1000000, 100);
   }
-  else if (key == 's') {
-     gameLevel.setWave(); 
+  else if (key == '1') {
+     gameLevel.setWave(9); 
+  }
+  else if (key == 'u') {
+    gameLevel.upgradeTower(mouseX, mouseY);
   }
 }
