@@ -87,12 +87,16 @@ public class Level {
        - losing health
        - checking for a win
   */
+ 
   public void attack() {
-     for (int i = 0; i < enemies.size(); i++) {
-       Enemy enemy = enemies.get(i);
-       for (int j = 0; j < towers.size(); j++) {
-          Tower tower1 = towers.get(j);
-          if (enemy.loseHealth(tower1.getDamage(), tower1.getRange())) {
+     for (int i = 0; i < towers.size(); i++) {
+       Tower tower = towers.get(i);
+       int currentAttacked = 0;
+       int maxEnemies = tower.getMax();
+       for (int j = 0; j < enemies.size() && currentAttacked < maxEnemies; j++) {
+          Enemy enemy = enemies.get(j);
+          if (enemy.loseHealth(tower.getDamage(), tower.getRange())) {
+            currentAttacked++;
             fill(255, 0, 0);
             //change sprite
             PImage deadEnemy = loadImage("RedBalloonEnemyPopping.png");
@@ -106,13 +110,16 @@ public class Level {
      }
   }
   
+  
+  
   // will be called from mouseCLicked function, x and y will the mouseX, mouseY
-  public void placeTower(int x, int y, int towerCost) {
+  public void placeTower(int x, int y, int towerCost, int towerType) {
+    int maxEnemies = 10000000;
     if (money >= towerCost && canPlace(x, y)) {
       useMoney(towerCost);
       gameBoard[x/60][y/60] = towerIndex + 1;
       towerIndex++;
-      towers.add(new Tower(1, 100, 100, 10, x, y)); // will change stats later
+      towers.add(new Tower(1, 100, 100, 10, x, y, maxEnemies)); // will change stats later
     }
   }
   

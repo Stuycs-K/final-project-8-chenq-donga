@@ -6,17 +6,19 @@ public class Tower {
   private int xcoord;
   private int ycoord;
   private int TowerLevel;
+  private int maxEnemiesAttacked;
   
   PImage BlueTower = loadImage("BlueTowerTestingTwo.png");
   PImage BlueTowerUp = loadImage("BlueTowerLevelTwo.png");
   //testing
   
-  public Tower(float dmg, float cd, int rng, int aba, int x, int y) {
+  public Tower(float dmg, float cd, int rng, int aba, int x, int y, int maxEnemies) {
     damage = dmg;
     cooldownTime = cd;
     range = rng;
     attacksbtwabilities = aba;
     fixXY(x, y);
+    maxEnemiesAttacked = maxEnemies;
   }
   
   public void fixXY(int x, int y) {
@@ -85,6 +87,10 @@ public class Tower {
   
   public float getCD() {
      return cooldownTime; 
+  }
+  
+  public int getMax() {
+    return maxEnemiesAttacked; 
   }
   
   public int[][] getRange() {

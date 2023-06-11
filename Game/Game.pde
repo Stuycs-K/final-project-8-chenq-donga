@@ -110,7 +110,7 @@ void drawEntities() {
        tower1.displayTower();
     }
     prevTowerAmount++;
-  // } //<>// //<>// //<>//
+  // } //<>// //<>// //<>// //<>//
   ArrayList<Enemy> enemies = gameLevel.getEnemies(); //<>//
   for (int i = 0; i < enemies.size(); i++) {
     Enemy enemy1 = enemies.get(i);
@@ -120,14 +120,13 @@ void drawEntities() {
 
 void mouseClicked() {
   if (mouseButton == LEFT) {
-    int[][] gameB = gameLevel.getBoard();
-    if (!(gameB[mouseX/60][mouseY/60] == -1)) {
-      gameLevel.placeTower(mouseX, mouseY, 250); 
+    if (mouseButton == LEFT) {
+       int[][] gameB = gameLevel.getBoard();
+       if (!(gameB[mouseX/60][mouseY/60] == -1)) {
+      gameLevel.placeTower(mouseX, mouseY, 250, 1); 
       towerAmount++;
+       } //<>//
     }
-  } //<>// //<>// //<>//
-  else if (mouseButton == RIGHT) { //<>//
-    gameLevel.spawnEnemyDebug(mouseX, mouseY);
   }
 }
 
