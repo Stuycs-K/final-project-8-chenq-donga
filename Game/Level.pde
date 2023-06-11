@@ -10,6 +10,7 @@ public class Level {
   private ArrayList<Enemy> enemies;
   private int[] start;
   private int[] end; 
+  private int towerIndex;
   
   private final int path = -1;
   
@@ -27,6 +28,7 @@ public class Level {
     enemies = new ArrayList<Enemy>();
     health = 20;
     money = 250;
+    towerIndex = 0;
   }
   
   public Level(String name, int hp, int mulah) { // cheat constrctor for demo cases
@@ -106,10 +108,23 @@ public class Level {
   
   // will be called from mouseCLicked function, x and y will the mouseX, mouseY
   public void placeTower(int x, int y, int towerCost) {
-    if (money >= towerCost) {
+    if (money >= towerCost && canPlace(x, y)) {
       useMoney(towerCost);
+      gameBoard[x/60][y/60] = towerIndex + 1;
+      towerIndex++;
       towers.add(new Tower(1, 100, 100, 10, x, y)); // will change stats later
     }
+  }
+  
+  public boolean canPlace(int x, int y) {
+     if (gameBoard[x/60][y/60] == 1) {
+       return false; 
+     }
+    return true;
+  }
+  
+  public void setWave() {
+     currentWave = 21; 
   }
   
   public void useMoney(int moneyUsed) {
@@ -164,6 +179,10 @@ public class Level {
     return enemyWaves; 
   }
   
+  public int getTowerIndex() {
+    return towerIndex;
+  }
+  
   /* THIS PART OF THE CODE FOR ENEMY RELATED FUNCTIONS
      CURRENTLY INCLUDES:
         - removing dead enemies
@@ -192,11 +211,11 @@ public class Level {
       int nextX = currentX;
       int nextY = currentY;
       if (currentDirection.equals("right")) {
-        nextX = currentX + 1;
+        nextX = currentX + 30;
       } else if (currentDirection.equals("down")) {
-        nextY = currentY + 1;
+        nextY = currentY + 30;
       } else if (currentDirection.equals("up")) {
-        nextY = currentY - 1;
+        nextY = currentY - 30;
       }
       if (gameBoard[nextX / 60][nextY / 60] == -1) {
         enemy.move();
@@ -244,9 +263,10 @@ public class Level {
   }
   
   // for special enemies
-  public void spawnEnemy(boolean isBoss, int hp, int speed) {
+  public void spawnEnemy(int hp, int speed) {
     int spawnX = start[0]*60 + 30;
     int spawnY = start[1]*60 + 30;
+    boolean isBoss = (hp > 1000);
     enemies.add(new Enemy(hp, speed, spawnX, spawnY, isBoss)); //placeholder values
   }
 }

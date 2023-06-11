@@ -16,8 +16,14 @@ public class Tower {
     cooldownTime = cd;
     range = rng;
     attacksbtwabilities = aba;
-    xcoord = x;
-    ycoord = y;
+    fixXY(x, y);
+  }
+  
+  public void fixXY(int x, int y) {
+     int gridX = x / 60;
+     int gridY = y / 60;
+     xcoord = (gridX * 60) + 15;
+     ycoord = (gridY * 60) + 15;
   }
   
   public int[][] towerRangeVertices() {
@@ -87,6 +93,10 @@ public class Tower {
     int[] v3 = new int[]{xcoord-range, ycoord+range};
     int[] v4 = new int[]{xcoord+range, ycoord+range};
     return new int[][]{v1, v2, v3, v4};
+  }
+  
+  public int getNumRange() {
+    return range; 
   }
   
   public int getLevel() {
