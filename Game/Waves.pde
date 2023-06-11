@@ -69,7 +69,6 @@ public class Waves {
    public boolean spawnBoss() {
      if (waveNum >= 20 && bossSpawned == 0) {
        float chance = waveNum * 0.01;
-       println(chance);
        if (Math.random() > chance) {
          bossSpawned = 1;
          return true; 
@@ -77,5 +76,4 @@ public class Waves {
      }
      return false;
    }
-   
 }

@@ -131,10 +131,12 @@ public class Level {
   }
   
   public void upgradeTower(int x, int y) {
-    Tower tower = towers.get(gameBoard[x/60][y/60] - 1);
-    if (money >= tower.getUpgradeCost()) {
-       int cost = tower.upgrades();
-       money = money - cost;
+    if (gameBoard[x/60][y/60] >= 1) {
+      Tower tower = towers.get(gameBoard[x/60][y/60] - 1);
+      if (money >= tower.getUpgradeCost()) {
+         int cost = tower.upgrades();
+         money = money - cost;
+      } 
     }
   }
   
