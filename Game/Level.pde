@@ -27,7 +27,7 @@ public class Level {
     towers = new ArrayList<Tower>();
     enemies = new ArrayList<Enemy>();
     health = 20;
-    money = 250;
+    money = 500;
     towerIndex = 0;
   }
   
@@ -104,10 +104,10 @@ public class Level {
               image(deadEnemy, enemy.getX(), enemy.getY());
               text("POP!", enemy.getX(), enemy.getY() - 15);
             }
-            //circle(enemy.getX(), enemy.getY(), 20);
           }
        }
      }
+     removeDeadEnemies();
   }
   
   
@@ -200,8 +200,8 @@ public class Level {
   public void removeDeadEnemies() {
     for (int i = 0; i < enemies.size(); i++) {
        Enemy enemy = enemies.get(i);
-       if (enemy.dropMoney() == 100) {
-         money += 100;
+       if (enemy.dropMoney() == 25) {
+         money += 25;
          enemies.remove(i);
          i--; // Decrement i to account for the removed enemy
       }

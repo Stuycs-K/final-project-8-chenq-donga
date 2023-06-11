@@ -3,6 +3,7 @@ int towerAmount;
 int prevTowerAmount;
 int frameLastAttacked = 0;
 int frameLastSpawned = 0;
+boolean hasWon = false;
 
 void setup() {
   size(1080, 900);
@@ -15,6 +16,7 @@ void setup() {
 void draw() {
   if (gameLevel.getCurrentWave() > 20) {
     background(255);
+    hasWon = true;
     fill(0, 255, 0);
     textSize(100);
     text("YOU WIN!", 310, 450);
@@ -41,10 +43,6 @@ void draw() {
      textSize(50);
      text("Press spacebar to restart", 270, 550);
   }
-}
-
-public void win() {
-
 }
 
 boolean detectWaveEnd(int[] stats) {
@@ -110,9 +108,9 @@ void drawGrid() {
 
 void drawEntities() {
   fill(0); 
-  // if (prevTowerAmount != towerAmount) {  //<>//
+  // if (prevTowerAmount != towerAmount) { 
     ArrayList<Tower> t = gameLevel.getTowers();
-     for (int i = 0; i <  t.size(); i++) {
+     for (int i = 0; i <  t.size(); i++) { //<>//
        Tower tower1 = t.get(i);
        tower1.displayTower();
     }
@@ -125,9 +123,9 @@ void drawEntities() {
   }
 }
 
-void drawMoneyHealthWave() { //<>//
+void drawMoneyHealthWave() {
    textSize(30);
-   text("Health: " + gameLevel.getHealth(),10, 60); 
+   text("Health: " + gameLevel.getHealth(),10, 60);  //<>//
    text("Money: " + gameLevel.getMoney(),10, 90);
    text("Current Wave: " + gameLevel.getCurrentWave(), 10, 120);
 }
@@ -170,7 +168,8 @@ void mouseClicked() {
 }
 
 void keyPressed() {
-  if (gameLevel.getHealth() <= 0 && key == ' ') {
+  if ((gameLevel.getHealth() <= 0 || hasWon)  && key == ' ') {
+     hasWon = false;
      gameLevel = new Level("Level 1");
   }
   else if (key == ' ') {
