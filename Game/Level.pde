@@ -254,7 +254,7 @@ public class Level {
       if (currentX >= end[0]*61) {
         enemies.remove(i);
         if (enemy.getHealth() < 10000) {
-          health--;
+          health = health - (int)(enemy.getHealth());
         }
         else if (enemy.getHealth() > 10000) {
           health = 0;
