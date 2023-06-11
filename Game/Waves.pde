@@ -38,7 +38,7 @@ public class Waves {
      else {
       while (currentAmount < maxSize) {
          int delay = 20 + (int)(Math.random() * 60);
-         int speed = (int)(Math.random() * 3);
+         int speed = 1 + (int)(Math.random() * 2);
          int hp = 1 + (int)(Math.random() * 3) + healthScaling();
          if (spawnBoss()) {
            hp = 999999999; 

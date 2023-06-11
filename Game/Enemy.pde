@@ -86,13 +86,13 @@ public class Enemy {
   
   public void move() {
     if (direction.equals("up")) {
-       ycoord--; 
+       ycoord = ycoord - (int)speed; 
     }
     else if (direction.equals("down")) {
-       ycoord++; 
+       ycoord = ycoord + (int)speed; 
     }
     else if (direction.equals("right")) {
-       xcoord++; 
+       xcoord = xcoord + (int)speed; 
     }
   }
   
