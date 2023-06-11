@@ -10,9 +10,9 @@ public class Level {
   private ArrayList<Enemy> enemies;
   private int[] start;
   private int[] end; 
+  private int towerIndex;
   
   private final int path = -1;
-  private final int towerOnSquare = 1;
   
   public Level(String name) { // normal constructor used in normal games
     maxWave = 20;
@@ -28,6 +28,7 @@ public class Level {
     enemies = new ArrayList<Enemy>();
     health = 20;
     money = 250;
+    towerIndex = 0;
   }
   
   public Level(String name, int hp, int mulah) { // cheat constrctor for demo cases
@@ -109,7 +110,8 @@ public class Level {
   public void placeTower(int x, int y, int towerCost) {
     if (money >= towerCost && canPlace(x, y)) {
       useMoney(towerCost);
-      gameBoard[x/60][y/60] = 1;
+      gameBoard[x/60][y/60] = towerIndex + 1;
+      towerIndex++;
       towers.add(new Tower(1, 100, 100, 10, x, y)); // will change stats later
     }
   }
@@ -175,6 +177,10 @@ public class Level {
   
   public Waves getWaves() {
     return enemyWaves; 
+  }
+  
+  public int getTowerIndex() {
+    return towerIndex;
   }
   
   /* THIS PART OF THE CODE FOR ENEMY RELATED FUNCTIONS

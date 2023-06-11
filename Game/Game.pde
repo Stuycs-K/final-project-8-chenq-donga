@@ -22,6 +22,7 @@ void draw() {
     tick();
     text(frameCount, 10, 30);
     drawMoneyHealthWave();
+    drawHighlight();
   }
   else if (gameLevel.getHealth() <= 0) {
      background(255);
@@ -44,7 +45,6 @@ boolean isEnemyInBuffer(int[] stats) {
 }
 
 void tick() {
-  debugPrint();
   int spawnCD = 20;
   float attackCooldown = 0;
   ArrayList<Tower> towers = gameLevel.getTowers();
@@ -86,7 +86,7 @@ void drawGrid() {
       else if (grid[i][j] == -1) {
         fill(190, 160, 130); 
       }
-      else if (grid[i][j] == 1) {
+      else if (grid[i][j] >= 1) {
         fill(0, 150, 255); 
       }
        square(i*60, j*60, 60);   
@@ -110,7 +110,7 @@ void drawEntities() {
        tower1.displayTower();
     }
     prevTowerAmount++;
-  // } //<>// //<>//
+  // } //<>// //<>// //<>//
   ArrayList<Enemy> enemies = gameLevel.getEnemies(); //<>//
   for (int i = 0; i < enemies.size(); i++) {
     Enemy enemy1 = enemies.get(i);
@@ -125,7 +125,7 @@ void mouseClicked() {
       gameLevel.placeTower(mouseX, mouseY, 250); 
       towerAmount++;
     }
-  } //<>// //<>//
+  } //<>// //<>// //<>//
   else if (mouseButton == RIGHT) { //<>//
     gameLevel.spawnEnemyDebug(mouseX, mouseY);
   }
@@ -143,6 +143,25 @@ void keyPressed() {
   }
 }
 
-void debugPrint() {
-  // println("size: " + gameLevel.getEnemies().size()); 
+void highlightTowerRange() {
+  int[][] board = gameLevel.getBoard();
+  if (board[mouseX/60][mouseY/60] >= 1) {
+     drawHighlight(); 
+  }
+}
+
+void drawHighlight() {
+  println(gameLevel.getTowerIndex());
+  int[][] board = gameLevel.getBoard();
+  ArrayList<Tower> tower = gameLevel.getTowers();
+  fill(255, 255, 255, 127); // 127 is the alpha channel
+  int x = mouseX / 60;
+  int y = mouseY / 60;
+  if (board[x][y] >= 1) {
+    Tower toHighlight = tower.get(board[x][y] - 1);
+    println("board xy" + (board[x][y] - 1));
+    int[][] range = toHighlight.getRange();
+    int numRange = toHighlight.getNumRange();
+    square(range[0][0], range[0][1], numRange * 2.3);
+  }
 }

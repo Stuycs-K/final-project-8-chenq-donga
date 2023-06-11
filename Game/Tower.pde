@@ -95,6 +95,10 @@ public class Tower {
     return new int[][]{v1, v2, v3, v4};
   }
   
+  public int getNumRange() {
+    return range; 
+  }
+  
   public int getLevel() {
     return TowerLevel; 
   }
