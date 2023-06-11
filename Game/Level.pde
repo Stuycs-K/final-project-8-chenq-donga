@@ -12,6 +12,7 @@ public class Level {
   private int[] end; 
   
   private final int path = -1;
+  private final int towerOnSquare = 1;
   
   public Level(String name) { // normal constructor used in normal games
     maxWave = 20;
@@ -106,10 +107,18 @@ public class Level {
   
   // will be called from mouseCLicked function, x and y will the mouseX, mouseY
   public void placeTower(int x, int y, int towerCost) {
-    if (money >= towerCost) {
+    if (money >= towerCost && canPlace(x, y)) {
       useMoney(towerCost);
+      gameBoard[x/60][y/60] = 1;
       towers.add(new Tower(1, 100, 100, 10, x, y)); // will change stats later
     }
+  }
+  
+  public boolean canPlace(int x, int y) {
+     if (gameBoard[x/60][y/60] == 1) {
+       return false; 
+     }
+    return true;
   }
   
   public void setWave() {
@@ -196,11 +205,11 @@ public class Level {
       int nextX = currentX;
       int nextY = currentY;
       if (currentDirection.equals("right")) {
-        nextX = currentX + 45;
+        nextX = currentX + 30;
       } else if (currentDirection.equals("down")) {
-        nextY = currentY + 45;
+        nextY = currentY + 30;
       } else if (currentDirection.equals("up")) {
-        nextY = currentY - 45;
+        nextY = currentY - 30;
       }
       if (gameBoard[nextX / 60][nextY / 60] == -1) {
         enemy.move();
