@@ -39,10 +39,28 @@ public class Enemy {
     ycoord = y;
     direction = "right";
     if (isBoss) {
-       EnemySprite = loadImage("BossMonsterOne.png");
+      EnemySprite = loadImage("BossMonsterOne.png");
     }
+    
+    ////wave 5
+    else if (hp >= 20 && hp < 40) {
+      EnemySprite = loadImage("Wave5Blimp.png");
+    }
+    ////wave 10
+    else if (hp >= 40 && hp < 60) {
+      EnemySprite = loadImage("Wave10HAB.png");
+    }
+    ////wave 15
+    else if (hp >= 60 && hp < 90) {
+      EnemySprite = loadImage("Wave15HAB.png");
+    }
+    ////wave 20
+    else if (hp >= 90 && hp < 1000) { 
+      EnemySprite = loadImage("Wave20Killer.png");
+    }
+    
     else {
-       EnemySprite = loadImage("RedBalloonEnemyTesting.png");
+      EnemySprite = loadImage("RedBalloonEnemyTesting.png");
     }
   }
   
