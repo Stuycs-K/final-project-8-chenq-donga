@@ -124,10 +124,12 @@ public class Level {
   }
   
   public void evolveTower(int x, int y, String type) {
-    Tower toEvolve = towers.get(gameBoard[x/60][y/60] - 1);
-    if (money >= toEvolve.getUpgradeCost()) {
-       useMoney(toEvolve.getUpgradeCost()); 
-       toEvolve.evolve(type);
+    if (gameBoard[x/60][y/60] >= 1) {
+      Tower toEvolve = towers.get(gameBoard[x/60][y/60] - 1);
+      if (money >= toEvolve.getUpgradeCost()) {
+         useMoney(toEvolve.getUpgradeCost()); 
+         toEvolve.evolve(type);
+      }
     }
   }
   
