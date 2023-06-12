@@ -210,6 +210,7 @@ void keyPressed() {
   else if (key == 'm' && inGrid()) {
     gameLevel.evolveTower(mouseX, mouseY, "" + 'm');
   }
+  /*
   else if (key == 'm') {
     gameLevel.setMoney();
   }
@@ -222,4 +223,5 @@ void keyPressed() {
   else if (key == '2') {
      gameLevel.setWave(33); 
   }
+  */
 }
