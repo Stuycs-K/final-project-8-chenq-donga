@@ -25,7 +25,7 @@ void draw() {
     text("Press spacebar to restart", 270, 550);
   }
   else if (gameLevel.getHealth() >= 1) {
-    background(255);
+    background(255, 114, 118);
     drawGrid();
     drawEntities();
     textSize(25);
@@ -33,6 +33,7 @@ void draw() {
     text(frameCount, 10, 30);
     drawMoneyHealthWave();
     drawHighlight();
+    //text("Controls: Left clicking on a blank green grid allows you to place down a tower.", 500, 120);
   }
   else if (gameLevel.getHealth() <= 0) {
      background(255);
@@ -157,6 +158,9 @@ void drawHighlight() {
     int[][] range = toHighlight.getRange();
     int numRange = toHighlight.getNumRange();
     square(range[0][0], range[0][1], numRange * 2.3);
+    textSize(25);
+    fill(0);
+    text("Upg Cost: " + toHighlight.getUpgradeCost(), toHighlight.xcoord - 45, toHighlight.ycoord + 25);
   }
 }
 
@@ -165,7 +169,7 @@ void mouseClicked() {
   if (mouseButton == LEFT) {
     if (mouseButton == LEFT) {
        int[][] gameB = gameLevel.getBoard();
-       if (!(gameB[mouseX/60][mouseY/60] == -1)) {
+       if (inGrid() && !(gameB[mouseX/60][mouseY/60] == -1)) {
       gameLevel.placeTower(mouseX, mouseY, 250, 1); 
       towerAmount++;
        }
