@@ -19,7 +19,7 @@ public class Tower {
     range = rng;
     fixXY(x, y);
     maxEnemiesAttacked = maxEnemies;
-    maxTowerLevel = 3;
+    maxTowerLevel = 4;
     towerLevel = 1;
     upgradeCost = 75;
   }
@@ -44,18 +44,20 @@ public class Tower {
   }
   
   public void evolve(String input) {
-    towerLevel++;
-    if (input.equals("s")) {
-      damage = 10;
-      range = range * 2;
-      cooldownTime = cooldownTime * 1.5;
-      maxEnemiesAttacked = 1;
-    }
-    else if (input.equals("m")) {
-      damage = 1;
-      range = (int)(range * 0.75);
-      cooldownTime = cooldownTime * 0.35;
-      maxEnemiesAttacked = 6;
+    if (towerLevel < maxTowerLevel) {
+      towerLevel++;
+      if (input.equals("s")) {
+        damage = 10;
+        range = range * 2;
+        cooldownTime = cooldownTime * 1.5;
+        maxEnemiesAttacked = 1;
+      }
+      else if (input.equals("m")) {
+        damage = 1;
+        range = (int)(range * 0.65);
+        cooldownTime = cooldownTime * 0.35;
+        maxEnemiesAttacked = 6;
+      }
     }
   }
   
@@ -80,7 +82,7 @@ public class Tower {
 
   public int upgrades() {
     //check 
-    if (towerLevel < maxTowerLevel) {
+    if (towerLevel < maxTowerLevel - 1) {
       increaseCost();
       towerLevel++;
       damage++;
