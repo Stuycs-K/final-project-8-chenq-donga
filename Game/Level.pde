@@ -99,10 +99,14 @@ public class Level {
             currentAttacked++;
             fill(255, 0, 0);
             //change sprite
-            PImage deadEnemy = loadImage("RedBalloonEnemyPopping.png");
-            if (enemy.getHealth() < 10000) {
-              image(deadEnemy, enemy.getX(), enemy.getY());
+            PImage deadEnemy1 = loadImage("RedBalloonEnemyPopping.png");
+            if ((currentWave % 5 != 0) && (enemy.getHealth() < 20) && (enemy.getHealth() == 0)) {
+              image(deadEnemy1, enemy.getX(), enemy.getY());
               text("POP!", enemy.getX(), enemy.getY() - 15);
+            }
+            //
+            else if (((currentWave % 5) == 0) && (enemy.getHealth() == 0) && (enemy.getHealth() < 10000)) {
+              text("POP!", enemy.getX(), enemy.getY() + 5);
             }
           }
        }
@@ -124,12 +128,10 @@ public class Level {
   }
   
   public void evolveTower(int x, int y, String type) {
-    if (gameBoard[x/60][y/60] >= 1) {
-      Tower toEvolve = towers.get(gameBoard[x/60][y/60] - 1);
-      if (money >= toEvolve.getUpgradeCost()) {
-         useMoney(toEvolve.getUpgradeCost()); 
-         toEvolve.evolve(type);
-      }
+    Tower toEvolve = towers.get(gameBoard[x/60][y/60] - 1);
+    if (money >= toEvolve.getUpgradeCost()) {
+       useMoney(toEvolve.getUpgradeCost()); 
+       toEvolve.evolve(type);
     }
   }
   
