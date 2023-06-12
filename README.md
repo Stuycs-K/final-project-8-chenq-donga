@@ -5,14 +5,17 @@ THIS DOCUMENT IS REQUIRED
 Ashton Dong, Quiyi Chen
 
 ## Overview
-This is a tower defense game, where you place towers to defend against enemies. As of the demo, enemies do not spawn in naturally, but that will be fixed for the main presentation. Towers have a set range in which they will attack enemes, and do a set amount of damage.
+This is a tower defense game, where you place towers to defend against enemies. As of the demo, enemies do not spawn in naturally, but that will be fixed for the main presentation. Towers have a set range in which they will attack enemues, and do a set amount of damage. They have the ability to be upgraded twice, and an evolution that can be bought after upgrading twice.
+
+The base tower(always hit 3 enemies) increases in range and damage, as well as a small increase in attack speed when upgraded. When evolved to the minigun, damage is significantly reduced, and range is slightly reduced, but attack speed is significantly increased, as well as the amount of enemies that can be targeted at once. When evolved into a sniper, attack speed is increased and it can only attack one enemy, but damage is significantly increased.
+
+Enemies have a speed stat, which will make them move faster if it is higher. Health is higher(on average) after each wave has passed, and every 5 waves, there will be a miniboss. 
+
+Winning the game is accomplished by beating wave 20.
 
 
 ## Instructions
-As of demo:
- - left click to place a tower, which will cost money and can't be placed on path squares(brown color).
- - right click to summon a enemy at the location of the mouse.
- 	- currently set to 3 hp
- 	- killing the enemy will give back money.
- - spacebar to trigger spawning of impossible enemy(mini k's).
- - if enough enemies reach the end, the game is over. Press spacebar to restart.
+ - Left Click to place tower
+ - `u` to upgrade a tower while hovering over it
+ - `m` or `s` to evolve into minigun or sniper, respectively
+ - spacebar to restart
