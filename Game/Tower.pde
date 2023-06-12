@@ -43,6 +43,22 @@ public class Tower {
     return cooldownTime;
   }
   
+  public void evolve(String input) {
+    towerLevel++;
+    if (input.equals("s")) {
+      damage = 10;
+      range = range * 2;
+      cooldownTime = cooldownTime * 2;
+      maxEnemiesAttacked = 1;
+    }
+    else if (input.equals("m")) {
+      damage = 1;
+      range = (int)(range * 0.75);
+      cooldownTime = cooldownTime * 0.35;
+      maxEnemiesAttacked = 6;
+    }
+  }
+  
   
   //public boolean enemyinrange() {
   //  //if theres any enemies in range, whichever is closest to the next node then return that

@@ -110,14 +110,14 @@ void drawGrid() {
 void drawEntities() {
   fill(0); 
   // if (prevTowerAmount != towerAmount) { 
-    ArrayList<Tower> t = gameLevel.getTowers();
-     for (int i = 0; i <  t.size(); i++) { //<>// //<>//
+    ArrayList<Tower> t = gameLevel.getTowers(); //<>//
+     for (int i = 0; i <  t.size(); i++) { //<>// //<>// //<>//
        Tower tower1 = t.get(i);
        tower1.displayTower();
     }
-    prevTowerAmount++;
-  // } //<>// //<>// //<>// //<>//
-  ArrayList<Enemy> enemies = gameLevel.getEnemies(); //<>// //<>//
+    prevTowerAmount++; //<>//
+  // } //<>// //<>// //<>// //<>// //<>// //<>//
+  ArrayList<Enemy> enemies = gameLevel.getEnemies(); //<>// //<>// //<>//
   for (int i = 0; i < enemies.size(); i++) {
     Enemy enemy1 = enemies.get(i);
     enemy1.displayEnemy();
@@ -125,8 +125,8 @@ void drawEntities() {
 }
 
 void drawMoneyHealthWave() {
-   textSize(30);
-   text("Health: " + gameLevel.getHealth(),10, 60);  //<>// //<>//
+   textSize(30); //<>//
+   text("Health: " + gameLevel.getHealth(),10, 60);  //<>// //<>// //<>//
    text("Money: " + gameLevel.getMoney(),10, 90);
    text("Current Wave: " + gameLevel.getCurrentWave(), 10, 120);
 }
@@ -160,7 +160,12 @@ void drawHighlight() {
     square(range[0][0], range[0][1], numRange * 2.3);
     textSize(25);
     fill(0);
-    text("Upg Cost: " + toHighlight.getUpgradeCost(), toHighlight.xcoord - 45, toHighlight.ycoord + 25);
+    if (toHighlight.getLevel() == 3) {
+      text("Evo Cost: " + toHighlight.getUpgradeCost(), toHighlight.xcoord - 45, toHighlight.ycoord + 25);
+    }
+    else if (toHighlight.getLevel() < 3) {
+      text("Upg Cost: " + toHighlight.getUpgradeCost(), toHighlight.xcoord - 45, toHighlight.ycoord + 25);
+    }   
   }
 }
 
@@ -182,6 +187,18 @@ void keyPressed() {
      hasWon = false;
      gameLevel = new Level("Level 1");
   }
+  else if (key == 'u' && inGrid()) {
+    gameLevel.upgradeTower(mouseX, mouseY);
+  }
+  else if (key == 's' && inGrid()) {
+    gameLevel.evolveTower(mouseX, mouseY, "" + 's');
+  }
+  else if (key == 'm' && inGrid()) {
+    gameLevel.evolveTower(mouseX, mouseY, "" + 'm');
+  }
+  else if (key == 'm') {
+    gameLevel.setMoney();
+  }
   else if (key == ' ') {
       gameLevel.spawnEnemy(1000000, 100);
   }
@@ -190,8 +207,5 @@ void keyPressed() {
   }
   else if (key == '2') {
      gameLevel.setWave(33); 
-  }
-  else if (key == 'u') {
-    gameLevel.upgradeTower(mouseX, mouseY);
   }
 }

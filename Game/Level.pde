@@ -114,12 +114,20 @@ public class Level {
   
   // will be called from mouseCLicked function, x and y will the mouseX, mouseY
   public void placeTower(int x, int y, int towerCost, int towerType) {
-    int maxEnemies = 10000000;
+    int maxEnemies = 3;
     if (money >= towerCost && canPlace(x, y)) {
       useMoney(towerCost);
       gameBoard[x/60][y/60] = towerIndex + 1;
       towerIndex++;
       towers.add(new Tower(1, 100, 100, x, y, maxEnemies)); // will change stats later
+    }
+  }
+  
+  public void evolveTower(int x, int y, String type) {
+    Tower toEvolve = towers.get(gameBoard[x/60][y/60] - 1);
+    if (money >= toEvolve.getUpgradeCost()) {
+       useMoney(toEvolve.getUpgradeCost()); 
+       toEvolve.evolve(type);
     }
   }
   
@@ -135,13 +143,18 @@ public class Level {
       Tower tower = towers.get(gameBoard[x/60][y/60] - 1);
       if (money >= tower.getUpgradeCost()) {
          int cost = tower.upgrades();
-         money = money - cost;
+         useMoney(cost);
       } 
     }
   }
   
   public void setWave(int wave) {
      currentWave = wave; 
+  }
+  
+  // cheat method
+  public void setMoney() {
+     money = 9999999;
   }
   
   public void useMoney(int moneyUsed) {
