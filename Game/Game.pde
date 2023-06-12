@@ -58,6 +58,29 @@ void sidebar() {
     text("Every wave generates balloons", 1100, 200);
     text("and after certain waves, a", 1125, 225);
     text("boss/miniboss will spawn in.", 1115, 250);
+    
+    text("Once you upgrade your towers to", 1100, 300);
+    text("a certain level, you can evolve", 1115, 325);
+    text("your towers to focus on a", 1130, 350);
+    text("special path.", 1175, 375);
+    text("You can upgrade your towers if", 1110, 400);
+    text("you have the money and your", 1115, 425);
+    text("tower isn't maxed out yet by", 1110, 450);
+    text("pressing the letter 'u' while", 1115, 475);
+    text("hovering over your placed tower.", 1100, 500);
+    
+    text("After being unable to upgrade", 1110, 525);
+    text("anymore by pressing either 's'", 1110, 550);
+    text("to evolve your tower into a sniper", 1095, 575);
+    text("or, by pressing 'm' to evolve into", 1095, 600);
+    text("a machinegunner.", 1160, 625);
+    
+    text("Inside this game, there are also", 1100, 675);
+    text("hidden little easter eggs and/or", 1100, 700);
+    text("cheats. Feel free to search for", 1100, 725);
+    text("them all. Hint: There's >= 2", 1115, 750);
+    
+    text("GOOD LUCK AND SURVIVE TILL W-", 1100, 825);
 }
 
 boolean detectWaveEnd(int[] stats) {
@@ -210,18 +233,16 @@ void keyPressed() {
   else if (key == 'm' && inGrid()) {
     gameLevel.evolveTower(mouseX, mouseY, "" + 'm');
   }
-  /*
   else if (key == 'm') {
     gameLevel.setMoney();
   }
   else if (key == ' ') {
       gameLevel.spawnEnemy(1000000, 100);
   }
-  else if (key == '1') {
-     gameLevel.setWave(9); 
-  }
-  else if (key == '2') {
-     gameLevel.setWave(33); 
-  }
-  */
+  //else if (key == '1') {
+  //   gameLevel.setWave(9); 
+  //}
+  //else if (key == '2') {
+  //   gameLevel.setWave(33); 
+  //}
 }
