@@ -2,7 +2,8 @@
 THIS DOCUMENT IS REQUIRED
 
 ## Group Info
-Ashton Dong, Quiyi Chen
+Group Name: Everyone Al-an for practicing Dong-fu?
+Group Members: Ashton Dong, Quiyi Chen
 
 ## Overview
 This is a tower defense game, where you place towers to defend against enemies. Towers have a set range in which they will attack enemues, and do a set amount of damage. They have the ability to be upgraded twice, and an evolution that can be bought after upgrading twice.
@@ -15,7 +16,12 @@ Winning the game is accomplished by beating wave 20.
 
 
 ## Instructions
- - Left Click to place tower
- - `u` to upgrade a tower while hovering over it
- - `m` or `s` to evolve into minigun or sniper, respectively
- - spacebar to restart
+ - Left Click to place tower.
+ - `u` to upgrade a tower while hovering over it.
+ - `m` or `s` to evolve into minigun or sniper, respectively.
+ - Press spacebar to restart when you lose.
+ - If you forget these instructions, there is also an instruction list on the side of the game when you load it up.
+
+
+
+
