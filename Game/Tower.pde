@@ -48,7 +48,7 @@ public class Tower {
     if (input.equals("s")) {
       damage = 10;
       range = range * 2;
-      cooldownTime = cooldownTime * 2;
+      cooldownTime = cooldownTime * 1.5;
       maxEnemiesAttacked = 1;
     }
     else if (input.equals("m")) {

@@ -33,6 +33,20 @@ void draw() {
     text(frameCount, 10, 30);
     drawMoneyHealthWave();
     drawHighlight();
+    sidebar();
+  }
+  else if (gameLevel.getHealth() <= 0) {
+     background(255);
+     fill(255, 0, 0); 
+     textSize(100);
+     text("GAME OVER", 450, 450);
+     fill(0);
+     textSize(50);
+     text("Press spacebar to restart", 450, 550);
+  }
+}
+
+void sidebar() {
     textSize(20);
     fill(0);
     text("Controls: Left clicking on a green", 1100, 50);
@@ -44,16 +58,6 @@ void draw() {
     text("Every wave generates balloons", 1100, 200);
     text("and after certain waves, a", 1125, 225);
     text("boss/miniboss will spawn in.", 1115, 250);
-  }
-  else if (gameLevel.getHealth() <= 0) {
-     background(255);
-     fill(255, 0, 0); 
-     textSize(100);
-     text("GAME OVER", 450, 450);
-     fill(0);
-     textSize(50);
-     text("Press spacebar to restart", 450, 550);
-  }
 }
 
 boolean detectWaveEnd(int[] stats) {
@@ -106,13 +110,13 @@ void drawGrid() {
       if (grid[i][j] == 0) {
         fill(0, 255, 127); 
       }
-      else if (grid[i][j] == -1) {
+      else if (grid[i][j] == -1) { //<>//
         fill(190, 160, 130); 
       }
       else if (grid[i][j] >= 1) {
         fill(0, 150, 255); 
-      }
-       square(i*60, j*60, 60);   
+      } //<>//
+       square(i*60, j*60, 60);    //<>//
     }
   }
 }
@@ -121,7 +125,7 @@ void drawEntities() {
   fill(0); 
   // if (prevTowerAmount != towerAmount) { 
     ArrayList<Tower> t = gameLevel.getTowers(); //<>//
-     for (int i = 0; i <  t.size(); i++) { //<>// //<>// //<>//
+     for (int i = 0; i <  t.size(); i++) { //<>// //<>// //<>// //<>//
        Tower tower1 = t.get(i);
        tower1.displayTower();
     }
