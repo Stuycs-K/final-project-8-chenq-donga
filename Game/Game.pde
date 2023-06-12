@@ -49,7 +49,7 @@ void draw() {
 void sidebar() {
     textSize(20);
     fill(0);
-    text("Controls: Left clicking on a green", 1100, 50);
+    text("Controls: 2x M1 clicking on a green", 1090, 50);
     text("grid allows you to place a tower.", 1100, 75);
     text("Hovering over a tower, it shows", 1100, 100);
     text("you the range of the tower, and it", 1100, 125);
