@@ -19,10 +19,10 @@ void draw() {
     hasWon = true;
     fill(0, 255, 0);
     textSize(100);
-    text("YOU WIN!", 310, 450);
+    text("YOU WIN!", 490, 450);
     fill(0);
     textSize(50);
-    text("Press spacebar to restart", 270, 550);
+    text("Press spacebar to restart", 450, 550);
   }
   else if (gameLevel.getHealth() >= 1) {
     background(255, 114, 118);
@@ -240,9 +240,18 @@ void keyPressed() {
       gameLevel.spawnEnemy(1000000, 100);
   }
   //else if (key == '1') {
-  //   gameLevel.setWave(9); 
+  //   gameLevel.setWave(4); 
   //}
   //else if (key == '2') {
-  //   gameLevel.setWave(33); 
+  //   gameLevel.setWave(9); 
+  //}
+  //else if (key == '3') {
+  //   gameLevel.setWave(14); 
+  //}
+  //else if (key == '4') {
+  //   gameLevel.setWave(19); 
+  //}
+  //else if (key == '5') {
+  //   gameLevel.setWave(25); 
   //}
 }
