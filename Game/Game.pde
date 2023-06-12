@@ -33,16 +33,26 @@ void draw() {
     text(frameCount, 10, 30);
     drawMoneyHealthWave();
     drawHighlight();
-    //text("Controls: Left clicking on a blank green grid allows you to place down a tower.", 500, 120);
+    textSize(20);
+    fill(0);
+    text("Controls: Left clicking on a green", 1100, 50);
+    text("grid allows you to place a tower.", 1100, 75);
+    text("Hovering over a tower, it shows", 1100, 100);
+    text("you the range of the tower, and it", 1100, 125);
+    text("also shows you the cost to level", 1100, 150);
+    text("up your tower.", 1175, 175);
+    text("Every wave generates balloons", 1100, 200);
+    text("and after certain waves, a", 1125, 225);
+    text("boss/miniboss will spawn in.", 1115, 250);
   }
   else if (gameLevel.getHealth() <= 0) {
      background(255);
      fill(255, 0, 0); 
      textSize(100);
-     text("GAME OVER", 270, 450);
+     text("GAME OVER", 450, 450);
      fill(0);
      textSize(50);
-     text("Press spacebar to restart", 270, 550);
+     text("Press spacebar to restart", 450, 550);
   }
 }
 
