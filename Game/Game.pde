@@ -6,7 +6,7 @@ int frameLastSpawned = 0;
 boolean hasWon = false;
 
 void setup() {
-  size(1080, 900);
+  size(1380, 900);
   gameLevel = new Level("Test");
   towerAmount = 0;
   prevTowerAmount = 0;
@@ -110,13 +110,13 @@ void drawEntities() {
   fill(0); 
   // if (prevTowerAmount != towerAmount) { 
     ArrayList<Tower> t = gameLevel.getTowers();
-     for (int i = 0; i <  t.size(); i++) { //<>//
+     for (int i = 0; i <  t.size(); i++) { //<>// //<>//
        Tower tower1 = t.get(i);
        tower1.displayTower();
     }
     prevTowerAmount++;
-  // } //<>// //<>// //<>//
-  ArrayList<Enemy> enemies = gameLevel.getEnemies(); //<>//
+  // } //<>// //<>// //<>// //<>//
+  ArrayList<Enemy> enemies = gameLevel.getEnemies(); //<>// //<>//
   for (int i = 0; i < enemies.size(); i++) {
     Enemy enemy1 = enemies.get(i);
     enemy1.displayEnemy();
@@ -125,16 +125,23 @@ void drawEntities() {
 
 void drawMoneyHealthWave() {
    textSize(30);
-   text("Health: " + gameLevel.getHealth(),10, 60);  //<>//
+   text("Health: " + gameLevel.getHealth(),10, 60);  //<>// //<>//
    text("Money: " + gameLevel.getMoney(),10, 90);
    text("Current Wave: " + gameLevel.getCurrentWave(), 10, 120);
 }
 
 void highlightTowerRange() {
   int[][] board = gameLevel.getBoard();
-  if (board[mouseX/60][mouseY/60] >= 1) {
+  if (inGrid() && board[mouseX/60][mouseY/60] >= 1) {
      drawHighlight(); 
   }
+}
+
+boolean inGrid() {
+  if (mouseX <= 1080) {
+     return true; 
+  }
+  return false;
 }
 
 void drawHighlight() {
@@ -144,7 +151,7 @@ void drawHighlight() {
   fill(255, 255, 255, 127); // 127 is the alpha channel
   int x = mouseX / 60;
   int y = mouseY / 60;
-  if (board[x][y] >= 1) {
+  if (inGrid() && board[x][y] >= 1 ) {
     Tower toHighlight = tower.get(board[x][y] - 1);
     println("board xy" + (board[x][y] - 1));
     int[][] range = toHighlight.getRange();
@@ -152,7 +159,6 @@ void drawHighlight() {
     square(range[0][0], range[0][1], numRange * 2.3);
   }
 }
-
 
 // INPUT DETECTION, CURRETNLY ON MOUSELEFT CLICK AND KEY PRESSES
 void mouseClicked() {
@@ -177,6 +183,9 @@ void keyPressed() {
   }
   else if (key == '1') {
      gameLevel.setWave(9); 
+  }
+  else if (key == '2') {
+     gameLevel.setWave(33); 
   }
   else if (key == 'u') {
     gameLevel.upgradeTower(mouseX, mouseY);

@@ -18,7 +18,7 @@ public class Level {
     maxWave = 20;
     enemyWaves = new Waves(20, 1);
     currentWave = 1;
-    gameBoard = new int[width/60][height/60];
+    gameBoard = new int[(width - 300)/60][height/60];
     start = new int[]{0, 4};
     end = new int[]{gameBoard.length - 1, 4};
     gameMap = new Map(name, start, end);
