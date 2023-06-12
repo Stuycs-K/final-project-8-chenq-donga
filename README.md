@@ -5,7 +5,7 @@ THIS DOCUMENT IS REQUIRED
 Ashton Dong, Quiyi Chen
 
 ## Overview
-This is a tower defense game, where you place towers to defend against enemies. As of the demo, enemies do not spawn in naturally, but that will be fixed for the main presentation. Towers have a set range in which they will attack enemues, and do a set amount of damage. They have the ability to be upgraded twice, and an evolution that can be bought after upgrading twice.
+This is a tower defense game, where you place towers to defend against enemies. Towers have a set range in which they will attack enemues, and do a set amount of damage. They have the ability to be upgraded twice, and an evolution that can be bought after upgrading twice.
 
 The base tower(always hit 3 enemies) increases in range and damage, as well as a small increase in attack speed when upgraded. When evolved to the minigun, damage is significantly reduced, and range is slightly reduced, but attack speed is significantly increased, as well as the amount of enemies that can be targeted at once. When evolved into a sniper, attack speed is increased and it can only attack one enemy, but damage is significantly increased.
 
