@@ -76,7 +76,7 @@ public class Tower {
       //change money as well
       //reduce the money based on what level the tower's on
       //or just a set amount each time for each upgrade.
-      return upgradeCost;
+      return upgradeCost / 3;
     }
     return 0;
   }
