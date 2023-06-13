@@ -22,6 +22,24 @@ Winning the game is accomplished by beating wave 20.
  - Press spacebar to restart when you lose.
  - If you forget these instructions, there is also an instruction list on the side of the game when you load it up.
 
+## DEV LOGS
+WORKING FEATURES:
+- Tower placing snaps to a singular grid.
+- Towers can be upgraded.
+- Tower upgrading costs are scaled proportionally.
+- Towers can evolve further.
+- Sprites for each special boss, tower, and normal enemies.
+- Hovering over the tower shows you the range of the tower.
+- Enemies spawn in waves, each with a random amount of hp.
+- Minibosses and bosses can spawn in.
+- Player loses if health reaches 0. 
 
+EASTER EGGS:
+- Players can spawn in infinite money, if they have their mouse cursor over the red rectangle with the instructions and press the `m` key.
+- Players can spawn in a special boss with a sprite that's based on Mr. Konstantinovich. The player will lose immediately. 
 
+BUGS: 
+- The players can evolve their towers immediately, if they have enough money. By evolving immediately, the player can have a significantly stronger tower. To do this, the player must hover over a tower, and press either `s` or `m` to evolve their level 1 tower. This can keep going until the tower reaches level 4. 
 
+USEFUL RESOURCES: 
+- We took inspiration from the game BTD6 (Balloons Tower Defense 6), with the ideas of popping balloons and blimps. 
