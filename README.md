@@ -24,6 +24,13 @@ Winning the game is accomplished by beating wave 20.
  - If you forget these instructions, there is also an instruction list on the side of the game when you load it up.
 
 ## DEV LOGS
+
+### Development related
+- adding range highlighting was easier than expected
+- adding a cap to how many enemies can be attacked from a tower wasn't that hard
+- the amount of functions that had to be made to get stuff from a class was a lot
+
+### Game Related
 WORKING FEATURES:
 - Tower placing snaps to a singular grid.
 - Towers can be upgraded.
